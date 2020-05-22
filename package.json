@@ -15,24 +15,24 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
-    "dotenv": "^6.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "helmet": "^3.13.0",
     "http-status": "^1.2.0",
     "jwt-then": "^1.0.1",
-    "mongoose": "^5.2.15"
+    "mongoose": "^5.9.15"
   },
   "devDependencies": {
-    "@types/dotenv": "^4.0.3",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.16.0",
-    "@types/node": "^10.9.4",
+    "@types/node": "^14.0.5",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.4",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.1",
+    "tslint": "^6.1.2",
     "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.0.3"
   }
