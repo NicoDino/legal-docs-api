@@ -31,4 +31,16 @@ const UserSchema = Schema(
   }
 );
 
+// Guardamos nombres y apellidos siempre upperCase
+UserSchema.pre('save', function(next){
+  const user = this;
+  if (user.isModified('name')) {
+      user.name = user.name.toUpperCase();
+  }
+  if (user.isModified('lastName')) {
+      user.lastName = user.lastName.toUpperCase();
+  }
+  next();
+})
+
 export default mongoose.model("User", UserSchema);
