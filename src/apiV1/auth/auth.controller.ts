@@ -25,7 +25,7 @@ export default class UserController {
       }
 
       const token = await jwt.sign({ email }, config.JWT_SECRET, {
-        expiresIn: config.JWT_EXPIRATION
+        expiresIn: 10000
       });
 
       res.status(200).send({
@@ -44,7 +44,7 @@ export default class UserController {
   public register = async (req: Request, res: Response): Promise<any> => {
     const { name, lastName, email, password } = req.body;
     try {
-      const hash = await bcrypt.hash(password, config.SALT_ROUNDS);
+      const hash = await bcrypt.hash(password, 10);
 
       const user = new User({
         name,
