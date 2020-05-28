@@ -1,7 +1,9 @@
 import * as mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const UserSchema = Schema(
+mongoose.SchemaTypes.String.set('trim', true);
+
+const userSchema = Schema(
   {
     name: {
       type: String,
@@ -10,7 +12,8 @@ const UserSchema = Schema(
     },
     lastName: {
       type: String,
-      required: true
+      required: true,
+      trim: true
     },
     email: {
       type: String,
@@ -21,8 +24,7 @@ const UserSchema = Schema(
     },
     password: {
       type: String,
-      required: true,
-      trim: true
+      required: true
     }
   },
   {
@@ -32,7 +34,7 @@ const UserSchema = Schema(
 );
 
 // Guardamos nombres y apellidos siempre upperCase
-UserSchema.pre('save', function(next){
+userSchema.pre('save', function(next){
   const user = this;
   if (user.isModified('name')) {
       user.name = user.name.toUpperCase();
@@ -43,4 +45,4 @@ UserSchema.pre('save', function(next){
   next();
 })
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model("User", userSchema);
