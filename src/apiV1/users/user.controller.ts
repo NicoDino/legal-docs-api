@@ -1,10 +1,32 @@
-import * as bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
-import config from '../../config/config';
 import User from './user.model';
 
 export default class UserController {
+
+  public findAll = async (req: Request, res: Response): Promise<any> => {
+    try {
+      const users = await User.find();
+      if (!users) {
+        return res.status(404).send({
+          success: false,
+          message: 'Users not found',
+          data: null
+        });
+      }
+
+      res.status(200).send({
+        success: true,
+        data: users
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: err.toString(),
+        data: null
+      });
+    }
+  };
+
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
