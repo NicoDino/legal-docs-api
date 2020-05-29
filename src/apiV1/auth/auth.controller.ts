@@ -1,8 +1,8 @@
-import * as bcrypt from 'bcrypt';
-import { Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
-import config from '../../config/config';
-import User from '../users/user.model';
+import * as bcrypt from "bcrypt";
+import { Request, Response } from "express";
+import * as jwt from "jsonwebtoken";
+import config from "../../config/config";
+import User from "../users/user.model";
 
 export default class UserController {
   public authenticate = async (req: Request, res: Response): Promise<any> => {
@@ -12,7 +12,7 @@ export default class UserController {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: 'User not found'
+          message: "User not found",
         });
       }
 
@@ -20,23 +20,23 @@ export default class UserController {
       if (!matchPasswords) {
         return res.status(401).send({
           success: false,
-          message: 'Not authorized'
+          message: "Not authorized",
         });
       }
 
       const token = await jwt.sign({ email }, config.JWT_SECRET, {
-        expiresIn: 10000
+        expiresIn: 10000,
       });
 
       res.status(200).send({
         success: true,
-        message: 'Token generated Successfully',
-        data: token
+        message: "Token generated Successfully",
+        data: token,
       });
     } catch (err) {
       res.status(500).send({
         success: false,
-        message: err.toString()
+        message: err.toString(),
       });
     }
   };
@@ -50,20 +50,20 @@ export default class UserController {
         name,
         lastName,
         email,
-        password: hash
+        password: hash,
       });
 
       const newUser = await user.save();
 
       res.status(201).send({
         success: false,
-        message: 'User Successfully created',
-        data: newUser
+        message: "User Successfully created",
+        data: newUser,
       });
     } catch (err) {
       res.status(500).send({
         success: false,
-        message: err.toString()
+        message: err.toString(),
       });
     }
   };
