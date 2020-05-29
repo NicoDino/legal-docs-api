@@ -7,6 +7,12 @@ import User from "../users/user.model";
 export default class UserController {
   public authenticate = async (req: Request, res: Response): Promise<any> => {
     const { email, password } = req.body;
+    if(!email || !password){
+      return res.status(404).send({
+        success: false,
+        message: "Not authorized",
+      });
+    }
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
