@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+
 const Schema = mongoose.Schema;
 
 const documentoSchema = Schema({
@@ -10,7 +11,7 @@ const documentoSchema = Schema({
   nombresAlternativos: {
     type: [String],
   },
-  categoria:  {
+  categoria: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Categoria",
   },
