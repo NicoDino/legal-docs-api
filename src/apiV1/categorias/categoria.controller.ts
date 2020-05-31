@@ -5,6 +5,7 @@ export default class CategoriaController {
 
     public findAll = async (req: Request, res: Response): Promise<any> => {
         try {
+            // const categorias = await Categoria.find().populate('descendientes').exec();
             const categorias = await Categoria.find();
             if (!categorias) {
                 return res.status(404).send({
@@ -13,11 +14,8 @@ export default class CategoriaController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: categorias
-            });
+            console.log(categorias)
+            res.json(categorias);
         } catch (err) {
             res.status(500).send({
                 success: false,
@@ -60,11 +58,7 @@ export default class CategoriaController {
                 padre
             });
             const newCategoria = await categoria.save();
-            res.status(201).send({
-                success: false,
-                message: "Categoria successfully created",
-                data: newCategoria,
-            });
+            res.json(newCategoria);
         } catch (err) {
             res.status(500).send({
                 success: false,
@@ -75,14 +69,14 @@ export default class CategoriaController {
     };
 
     public update = async (req: Request, res: Response): Promise<any> => {
-        const { nombre, padre } = req.body;
+        const { nombre,  descendientes } = req.body;
         try {
             const categoriaUpdated = await Categoria.findByIdAndUpdate(
                 req.params.id,
                 {
                     $set: {
                         nombre,
-                        padre
+                         descendientes
                     }
                 },
                 { new: true }
