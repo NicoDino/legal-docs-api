@@ -12,10 +12,10 @@ categoria.get('/',  controller.findAll);
 categoria.get('/:id', verifyToken, controller.findOne);
 
 // Create a categoria
-categoria.post('/', verifyToken, controller.create);
+categoria.post('/', controller.create);
 
 // Update a categoria with Id
-categoria.put('/:id', verifyToken, controller.update);
+categoria.put('/:id', controller.update);
 
 // Delete a categoria with Id
 categoria.delete('/:id', verifyToken, controller.remove);
