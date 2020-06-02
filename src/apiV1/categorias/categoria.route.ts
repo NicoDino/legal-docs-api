@@ -6,16 +6,16 @@ const categoria: Router = Router();
 const controller = new Controller();
 
 // Retrieve all categorias
-categoria.get('/', controller.findAll);
+categoria.get('/',  controller.findAll);
 
 // Retrieve a specific categoria
-categoria.get('/:id', controller.findOne);
+categoria.get('/:id', verifyToken, controller.findOne);
 
 // Create a categoria
-categoria.post('/', verifyToken, controller.create);
+categoria.post('/', controller.create);
 
 // Update a categoria with Id
-categoria.put('/:id', verifyToken, controller.update);
+categoria.put('/:id', controller.update);
 
 // Delete a categoria with Id
 categoria.delete('/:id', verifyToken, controller.remove);

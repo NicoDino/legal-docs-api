@@ -22,10 +22,14 @@ const documentoSchema = Schema({
     required: true,
     enum: ["profesional", "particular"],
   },
-  referencias: {
+  referencias: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Documento",
-  },
+  }],
+  campos: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Campo",
+  }],
   preview: {
     // Base64
     type: String,
