@@ -12,7 +12,7 @@ const verifyToken = async (req, res, next): Promise<any> => {
     const decoded = await jwt.verify(token, config.JWT_SECRET);
     next();
   } catch (err) {
-    res.status(500).send({ auth: false, message: err });
+    res.status(401).send({ auth: false, message: err });
   }
 };
 
