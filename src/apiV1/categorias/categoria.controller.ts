@@ -9,11 +9,10 @@ export default class CategoriaController {
       if (!categorias) {
         return res.status(404).send({
           success: false,
-          message: "Categorias not found",
+          message: "Categorias no encontradas",
           data: null,
         });
       }
-      console.log(categorias);
       res.json(categorias);
     } catch (err) {
       res.status(500).send({
@@ -30,7 +29,7 @@ export default class CategoriaController {
       if (!categoria) {
         return res.status(404).send({
           success: false,
-          message: "Categoria not found",
+          message: "Categoria no encontrada",
           data: null,
         });
       }
@@ -88,7 +87,7 @@ export default class CategoriaController {
       if (!categoriaUpdated) {
         return res.status(404).send({
           success: false,
-          message: "Categoria not found",
+          message: "Categoria no encontrada",
           data: null,
         });
       }
@@ -112,7 +111,7 @@ export default class CategoriaController {
       if (!categoria) {
         return res.status(404).send({
           success: false,
-          message: "Categoria not found",
+          message: "Categoria no encontrada",
           data: null,
         });
       }
