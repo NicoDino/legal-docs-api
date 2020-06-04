@@ -13,11 +13,7 @@ export default class FaqController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: faqs
-            });
+            res.json(faqs);
         } catch (err) {
             res.status(500).send({
                 success: false,
