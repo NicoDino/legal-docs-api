@@ -10,7 +10,7 @@ export default class UserController {
     if(!email || !password){
       return res.status(404).send({
         success: false,
-        message: "Not authorized",
+        message: "No Autorizado",
       });
     }
     try {
@@ -18,7 +18,7 @@ export default class UserController {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "User not found",
+          message: "Usuario inexistente",
         });
       }
 
@@ -26,7 +26,7 @@ export default class UserController {
       if (!matchPasswords) {
         return res.status(401).send({
           success: false,
-          message: "Not authorized",
+          message: "No autorizado",
         });
       }
 
