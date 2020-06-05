@@ -6,10 +6,10 @@ const faq: Router = Router();
 const controller = new Controller();
 
 // Retrieve all faqs
-faq.get('/', controller.findAll);
+faq.get('/', verifyToken,controller.findAll);
 
 // Retrieve a specific faq
-faq.get('/:id', controller.findOne);
+faq.get('/:id',verifyToken, controller.findOne);
 
 // Create a faq
 faq.post('/', verifyToken, controller.create);

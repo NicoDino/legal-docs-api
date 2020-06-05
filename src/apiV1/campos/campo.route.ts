@@ -6,10 +6,10 @@ const campo: Router = Router();
 const controller = new Controller();
 
 // Retrieve all campos
-campo.get('/', controller.findAll);
+campo.get('/',verifyToken, controller.findAll);
 
 // Retrieve a specific campo
-campo.get('/:id', controller.findOne);
+campo.get('/:id', verifyToken,controller.findOne);
 
 // Create a campo
 campo.post('/', verifyToken, controller.create);
