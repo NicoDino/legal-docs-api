@@ -13,11 +13,7 @@ export default class DocumentoController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: documentos
-            });
+            res.json(documentos);
         } catch (err) {
             res.status(500).send({
                 success: false,
