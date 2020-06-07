@@ -34,7 +34,7 @@ export default class UserController {
       });
 
       res.json({
-        user: { nombre: user.name, apellido: user.lastName, email: user.email, id: user._id},
+        user: { nombre: user.nombre, apellido: user.apellido, email: user.email, id: user._id},
         token,
       });
     } catch (err) {
@@ -46,13 +46,13 @@ export default class UserController {
   };
 
   public register = async (req: Request, res: Response): Promise<any> => {
-    const { name, lastName, email, password } = req.body;
+    const { nombre, apellido, email, password } = req.body;
     try {
       const hash = await bcrypt.hash(password, 10);
 
       const user = new User({
-        name,
-        lastName,
+        nombre,
+        apellido,
         email,
         password: hash,
       });
