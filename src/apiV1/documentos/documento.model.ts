@@ -10,7 +10,7 @@ const documentoSchema = Schema({
   nombresAlternativos: {
     type: [String],
   },
-  categoria:  {
+  categoria: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Categoria",
   },
@@ -29,6 +29,7 @@ const documentoSchema = Schema({
   campos: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Campo",
+    autopopulate: true
   }],
   preview: {
     // Base64
