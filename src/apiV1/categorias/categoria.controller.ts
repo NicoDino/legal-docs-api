@@ -33,11 +33,7 @@ export default class CategoriaController {
           data: null,
         });
       }
-
-      res.status(200).send({
-        success: true,
-        data: categoria,
-      });
+      res.json(categoria);
     } catch (err) {
       res.status(500).send({
         success: false,

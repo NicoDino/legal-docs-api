@@ -21,18 +21,22 @@ const campoSchema = Schema(
     tipo: {
       type: String,
       required: true,
-      enum: ['boolean','opciones','input']
+      enum: ['boolean', 'opciones', 'input']
     },
-    opciones:{
+    opciones: {
       type: [String],
 
     },
-    min:{
-      type:Number
+    min: {
+      type: Number
     },
-    max:{
-      type:Number
-    }
+    max: {
+      type: Number
+    },
+    documento: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Documento',
+    },
   }
 );
 

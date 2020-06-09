@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Campo from './campo.model';
-import campo from './campo.route';
+import Documento from '../documentos/documento.model';
 
 export default class CampoController {
 
@@ -14,11 +14,7 @@ export default class CampoController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: campos
-            });
+            res.json(campos);
         } catch (err) {
             res.status(500).send({
                 success: false,
@@ -39,11 +35,7 @@ export default class CampoController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: campo
-            });
+            res.json(campo);
         } catch (err) {
             res.status(500).send({
                 success: false,
@@ -54,7 +46,7 @@ export default class CampoController {
     };
 
     public create = async (req: Request, res: Response): Promise<any> => {
-        const { identificador, nombre, descripcion, tipo, opciones, min, max } = req.body;
+        const { identificador, nombre, descripcion, tipo, opciones, min, max, documento } = req.body;
         try {
             const campo = new Campo({
                 identificador,
@@ -63,9 +55,15 @@ export default class CampoController {
                 tipo,
                 opciones,
                 min,
-                max
+                max,
+                documento
             });
             const newCampo = await campo.save();
+            if (newCampo.documento) {
+                const documento = await Documento.findById(newCampo.documento);
+                documento.campos.push(newCampo._id);
+                await documento.save();
+            }
             res.status(201).send({
                 success: false,
                 message: "Campo successfully created",
