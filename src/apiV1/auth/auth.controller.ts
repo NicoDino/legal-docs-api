@@ -7,10 +7,10 @@ import User from "../users/user.model";
 export default class UserController {
   public authenticate = async (req: Request, res: Response): Promise<any> => {
     const { email, password } = req.body;
-    if(!email || !password){
+    if (!email || !password) {
       return res.status(404).send({
         success: false,
-        message: "Not authorized",
+        message: "No Autorizado",
       });
     }
     try {
@@ -18,15 +18,14 @@ export default class UserController {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "User not found",
+          message: "Usuario inexistente",
         });
       }
-
       const matchPasswords = await bcrypt.compare(password, user.password);
       if (!matchPasswords) {
         return res.status(401).send({
           success: false,
-          message: "Not authorized",
+          message: "No autorizado",
         });
       }
 
@@ -34,10 +33,9 @@ export default class UserController {
         expiresIn: 10000,
       });
 
-      res.status(200).send({
-        success: true,
-        message: "Token generated Successfully",
-        data: token,
+      res.json({
+        user: { nombre: user.nombre, apellido: user.apellido, email: user.email, id: user._id},
+        token,
       });
     } catch (err) {
       res.status(500).send({
@@ -48,13 +46,13 @@ export default class UserController {
   };
 
   public register = async (req: Request, res: Response): Promise<any> => {
-    const { name, lastName, email, password } = req.body;
+    const { nombre, apellido, email, password } = req.body;
     try {
       const hash = await bcrypt.hash(password, 10);
 
       const user = new User({
-        name,
-        lastName,
+        nombre,
+        apellido,
         email,
         password: hash,
       });

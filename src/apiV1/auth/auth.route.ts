@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Controller from './auth.controller';
+import verifyToken from '../../helpers/verifyToken';
 
 const user: Router = Router();
 const controller = new Controller();
@@ -8,6 +9,6 @@ const controller = new Controller();
 user.post('/authenticate', controller.authenticate);
 
 // Register New User
-user.post('/register', controller.register);
+user.post('/register',verifyToken, controller.register);
 
 export default user;

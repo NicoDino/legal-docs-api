@@ -5,12 +5,12 @@ mongoose.SchemaTypes.String.set('trim', true);
 
 const userSchema = Schema(
   {
-    name: {
+    nombre: {
       type: String,
       required: true,
       trim: true
     },
-    lastName: {
+    apellido: {
       type: String,
       required: true,
       trim: true
@@ -25,6 +25,9 @@ const userSchema = Schema(
     password: {
       type: String,
       required: true
+    },
+    token:{
+      type:String
     }
   },
   {
@@ -36,11 +39,11 @@ const userSchema = Schema(
 // Guardamos nombres y apellidos siempre upperCase
 userSchema.pre('save', function(next){
   const user = this;
-  if (user.isModified('name')) {
-      user.name = user.name.toUpperCase();
+  if (user.isModified('nombre')) {
+      user.nombre = user.nombre.toUpperCase();
   }
-  if (user.isModified('lastName')) {
-      user.lastName = user.lastName.toUpperCase();
+  if (user.isModified('apellido')) {
+      user.apellido = user.apellido.toUpperCase();
   }
   next();
 })
