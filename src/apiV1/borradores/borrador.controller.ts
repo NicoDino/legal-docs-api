@@ -13,11 +13,7 @@ export default class BorradorController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: borradors
-            });
+            res.json(borradors);
         } catch (err) {
             res.status(500).send({
                 success: false,
@@ -38,11 +34,7 @@ export default class BorradorController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: borrador
-            });
+            res.json(borrador);
         } catch (err) {
             res.status(500).send({
                 success: false,
