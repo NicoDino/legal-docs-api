@@ -8,14 +8,9 @@ const campoSchema = Schema({
     required: true,
     trim: true,
   },
-  nombre: {
-    type: String,
-    required: true,
-    trim: true,
-  },
+  /** Una pequeña explicación del propósito del campo para el cliente */
   descripcion: {
     type: String,
-    required: true,
     trim: true,
   },
   tipo: {

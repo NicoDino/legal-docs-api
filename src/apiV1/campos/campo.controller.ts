@@ -44,11 +44,10 @@ export default class CampoController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { identificador, nombre, descripcion, tipo, opciones, min, max, documento } = req.body;
+    const { identificador, descripcion, tipo, opciones, min, max, documento } = req.body;
     try {
       const campo = new Campo({
         identificador,
-        nombre,
         descripcion,
         tipo,
         opciones,
@@ -77,14 +76,13 @@ export default class CampoController {
   };
 
   public update = async (req: Request, res: Response): Promise<any> => {
-    const { identificador, nombre, descripcion, tipo, opciones, min, max } = req.body;
+    const { identificador, descripcion, tipo, opciones, min, max } = req.body;
     try {
       const campoUpdated = await Campo.findByIdAndUpdate(
         req.params.id,
         {
           $set: {
             identificador,
-            nombre,
             descripcion,
             tipo,
             opciones,
