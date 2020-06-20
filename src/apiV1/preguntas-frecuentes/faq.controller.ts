@@ -23,6 +23,25 @@ export default class FaqController {
         }
     };
 
+    public findAllPublic = async (req: Request, res: Response): Promise<any> => {
+        try {
+            const faqs = await Faq.find();
+            if (!faqs) {
+                return res.status(404).send({
+                    success: false,
+                    message: 'Faqs not found',
+                    data: null
+                });
+            }
+            res.json(faqs);
+        } catch (err) {
+            res.status(500).send({
+                success: false,
+                message: err.toString(),
+                data: null
+            });
+        }
+    };
 
     public findOne = async (req: Request, res: Response): Promise<any> => {
         try {
