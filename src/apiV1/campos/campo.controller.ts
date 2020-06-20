@@ -76,19 +76,12 @@ export default class CampoController {
   };
 
   public update = async (req: Request, res: Response): Promise<any> => {
-    const { identificador, descripcion, tipo, opciones, min, max } = req.body;
+    const update = req.body;
     try {
       const campoUpdated = await Campo.findByIdAndUpdate(
         req.params.id,
         {
-          $set: {
-            identificador,
-            descripcion,
-            tipo,
-            opciones,
-            min,
-            max,
-          },
+          $set: update,
         },
         { new: true }
       );
