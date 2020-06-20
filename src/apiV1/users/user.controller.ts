@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import User from "./user.model";
 import * as bcrypt from "bcrypt";
-import { sendMail } from "../../helpers/mailer";
+import { sendToken } from "../../helpers/mailer";
 export default class UserController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -204,7 +204,7 @@ export default class UserController {
       const hash = await bcrypt.hash(newToken, 10);
       user.token = hash;
       await user.save();
-      await sendMail(user, newToken);
+      await sendToken(user, newToken);
       res.json({ message: "Código enviado" });
     } catch (err) {
       res.status(500).send({
