@@ -11,6 +11,9 @@ borrador.get('/', controller.findAll);
 // Retrieve a specific borrador
 borrador.get('/:id', controller.findOne);
 
+// Retrieve a specific borrador
+borrador.get('/:id/client_copy', controller.createCopy);
+
 // Create a borrador
 borrador.post('/', controller.create);
 
