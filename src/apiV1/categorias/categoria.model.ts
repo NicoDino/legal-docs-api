@@ -9,14 +9,19 @@ const categoriaSchema = Schema(
       required: true,
       trim: true,
     },
-    padre:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'Categoria',
+    tipo: {
+      type: String,
+      required: true,
+      enum: ["profesional", "particular"],
     },
-    descendientes:[{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'Categoria',
-      autopopulate:true
+    padre: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Categoria',
+    },
+    descendientes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Categoria',
+      autopopulate: true
     }],
 
   }

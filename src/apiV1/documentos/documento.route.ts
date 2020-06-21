@@ -6,10 +6,13 @@ const documento: Router = Router();
 const controller = new Controller();
 
 // Retrieve all documentos
-documento.get('/', verifyToken,controller.findAll);
+documento.get('/', verifyToken, controller.findAll);
+
+// Retrieve public documentos
+documento.get('/public', controller.findAll);
 
 // Retrieve a specific documento
-documento.get('/:id', verifyToken,controller.findOne);
+documento.get('/:id', verifyToken, controller.findOne);
 
 // Create a documento
 documento.post('/', verifyToken, controller.create);
