@@ -1,4 +1,6 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
+import * as autopopulate from 'mongoose-autopopulate';
+
 const Schema = mongoose.Schema;
 
 const documentoSchema = Schema({
@@ -12,7 +14,7 @@ const documentoSchema = Schema({
   },
   categoria: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Categoria",
+    ref: 'Categoria',
   },
   html: {
     type: String,
@@ -20,17 +22,21 @@ const documentoSchema = Schema({
   tipo: {
     type: String,
     required: true,
-    enum: ["profesional", "particular"],
+    enum: ['profesional', 'particular'],
   },
-  referencias: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Documento",
-  }],
-  campos: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Campo",
-    autopopulate: true
-  }],
+  referencias: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Documento',
+    },
+  ],
+  campos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Campo',
+      autopopulate: true,
+    },
+  ],
   preview: {
     // Base64
     type: String,
@@ -40,5 +46,6 @@ const documentoSchema = Schema({
     required: true,
   },
 });
+documentoSchema.plugin(autopopulate);
 
-export default mongoose.model("Documento", documentoSchema);
+export default mongoose.model('Documento', documentoSchema);
