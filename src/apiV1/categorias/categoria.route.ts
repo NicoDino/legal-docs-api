@@ -8,6 +8,9 @@ const controller = new Controller();
 // Retrieve all categorias
 categoria.get("/", verifyToken, controller.findAll);
 
+// Retrieve all categorias public
+categoria.get("/public", controller.findAllPublic);
+
 // Retrieve a specific categoria
 categoria.get("/:id", verifyToken, controller.findOne);
 

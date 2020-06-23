@@ -23,6 +23,27 @@ export default class CategoriaController {
     }
   };
 
+  public findAllPublic = async (req: Request, res: Response): Promise<any> => {
+    try {
+      // const categorias = await Categoria.find().populate('descendientes').exec();
+      const categorias = await Categoria.find();
+      if (!categorias) {
+        return res.status(404).send({
+          success: false,
+          message: "Categorias no encontradas",
+          data: null,
+        });
+      }
+      res.json(categorias);
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: err.toString(),
+        data: null,
+      });
+    }
+  };
+
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
       const categoria = await Categoria.findById(req.params.id);
@@ -46,6 +67,7 @@ export default class CategoriaController {
   public create = async (req: Request, res: Response): Promise<any> => {
     const nuevaCategoria = {
       nombre: req.body.nombre,
+      tipo: req.body.tipo,
       padre: req.body.padre || null,
     };
     try {
@@ -68,14 +90,15 @@ export default class CategoriaController {
   };
 
   public update = async (req: Request, res: Response): Promise<any> => {
-    const { nombre, descendientes } = req.body;
+    const { nombre, descendientes, tipo } = req.body;
     try {
       const categoriaUpdated = await Categoria.findByIdAndUpdate(
         req.params.id,
         {
           $set: {
             nombre,
-            descendientes,
+            tipo,
+            descendientes
           },
         },
         { new: true }
