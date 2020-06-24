@@ -59,11 +59,7 @@ export default class BorradorController {
         campos,
       });
       const newBorrador = await borrador.save();
-      res.status(201).send({
-        success: false,
-        message: 'Borrador successfully created',
-        data: newBorrador,
-      });
+      res.json(newBorrador);
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -142,23 +138,24 @@ export default class BorradorController {
       let rawCopy: string = borrador.documento.html;
       const campos = borrador.campos;
       campos.forEach((campo) => {
-        rawCopy = rawCopy.replace('__________', campo.valor);
+        rawCopy = rawCopy.replace('__________', campo);
       });
       const browser = await launch({ headless: true });
       const page = await browser.newPage();
       await page.setContent(rawCopy);
       const buffer = await page.pdf({
         format: 'A4',
-        printBackground: true,
+        printBackground: false,
         margin: {
-          left: '0px',
-          top: '0px',
-          right: '0px',
-          bottom: '0px',
+          left: '40px',
+          top: '60px',
+          right: '40px',
+          bottom: '40px',
         },
       });
       await browser.close();
-      res.end(buffer);
+      res.contentType('application/pdf');
+      res.send(buffer);
 
       //   res.json(rawCopy);
     } catch (err) {
