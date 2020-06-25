@@ -14,6 +14,9 @@ documento.get('/public', controller.findAll);
 // Retrieve a specific documento
 documento.get('/:id', verifyToken, controller.findOne);
 
+// Retrieve a specific documento public
+documento.get('/public/:id', controller.findOne);
+
 // Create a documento
 documento.post('/', verifyToken, controller.create);
 
