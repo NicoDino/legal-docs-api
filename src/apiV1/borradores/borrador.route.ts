@@ -12,7 +12,7 @@ borrador.get('/', controller.findAll);
 borrador.get('/:id', controller.findOne);
 
 // Retrieve a specific borrador
-borrador.get('/:id/client_copy', controller.createCopy);
+// borrador.get('/:id/client_copy', controller.createCopy);
 
 // Create a borrador
 borrador.post('/', controller.create);
@@ -24,4 +24,3 @@ borrador.put('/:id', verifyToken, controller.update);
 borrador.delete('/:id', verifyToken, controller.remove);
 
 export default borrador;
-
