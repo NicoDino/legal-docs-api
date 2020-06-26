@@ -24,9 +24,7 @@ export default class DocumentoController {
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
-      const documento = await Documento.findById(req.params.id, {
-        password: 0,
-      });
+      const documento = await Documento.findOne({ _id: req.params.id }).populate('categoria');
       if (!documento) {
         return res.status(404).send({
           success: false,

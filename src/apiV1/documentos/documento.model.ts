@@ -21,7 +21,6 @@ const documentoSchema = Schema({
   },
   tipo: {
     type: String,
-    required: true,
     enum: ['profesional', 'particular'],
   },
   referencias: [
