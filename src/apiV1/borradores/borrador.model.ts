@@ -1,6 +1,6 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-import * as autopopulate from "mongoose-autopopulate";
+import * as autopopulate from 'mongoose-autopopulate';
 
 const borradorSchema = Schema({
   emailCliente: {
@@ -10,19 +10,12 @@ const borradorSchema = Schema({
   },
   documento: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Documento",
+    ref: 'Documento',
     autopopulate: true,
   },
-  campos: {
-    type: [
-      {
-        identificador: String,
-        valor: mongoose.SchemaTypes.Mixed,
-      },
-    ],
-  },
+  campos: [{ type: String }],
 });
 
 borradorSchema.plugin(autopopulate);
 
-export default mongoose.model("Borrador", borradorSchema);
+export default mongoose.model('Borrador', borradorSchema);

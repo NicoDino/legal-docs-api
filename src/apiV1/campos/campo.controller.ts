@@ -61,11 +61,7 @@ export default class CampoController {
         documento.campos.push(newCampo._id);
         await documento.save();
       }
-      res.status(201).send({
-        success: false,
-        message: 'Campo successfully created',
-        data: newCampo,
-      });
+      res.json(newCampo);
     } catch (err) {
       res.status(500).send({
         success: false,

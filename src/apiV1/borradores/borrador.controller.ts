@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import Borrador from './borrador.model';
 import { launch } from 'puppeteer';
+import { sendBorrador } from '../../helpers/mailer';
+import Documento from '../documentos/documento.model';
+
 export default class BorradorController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -59,10 +62,9 @@ export default class BorradorController {
         campos,
       });
       const newBorrador = await borrador.save();
-      res.status(201).send({
-        success: false,
-        message: 'Borrador successfully created',
-        data: newBorrador,
+      this.crearCopia(newBorrador, emailCliente, documento);
+      res.status(200).send({
+        success: true,
       });
     } catch (err) {
       res.status(500).send({
@@ -128,45 +130,28 @@ export default class BorradorController {
     }
   };
 
-  public createCopy = async (req: Request, res: Response): Promise<any> => {
-    try {
-      const borrador = await Borrador.findById(req.params.id, { password: 0 });
-      if (!borrador) {
-        return res.status(404).send({
-          success: false,
-          message: 'Borrador not found',
-          data: null,
-        });
-      }
-      console.log(borrador);
-      let rawCopy: string = borrador.documento.html;
-      const campos = borrador.campos;
-      campos.forEach((campo) => {
-        rawCopy = rawCopy.replace('__________', campo.valor);
-      });
-      const browser = await launch({ headless: true });
-      const page = await browser.newPage();
-      await page.setContent(rawCopy);
-      const buffer = await page.pdf({
-        format: 'A4',
-        printBackground: true,
-        margin: {
-          left: '0px',
-          top: '0px',
-          right: '0px',
-          bottom: '0px',
-        },
-      });
-      await browser.close();
-      res.end(buffer);
-
-      //   res.json(rawCopy);
-    } catch (err) {
-      res.status(500).send({
-        success: false,
-        message: err.toString(),
-        data: null,
-      });
-    }
+  crearCopia = async (borrador, emailCliente, idDocumento) => {
+    let rawCopy: string = borrador.documento.html;
+    const campos = borrador.campos;
+    campos.forEach((campo) => {
+      rawCopy = rawCopy.replace('__________', campo);
+    });
+    const browser = await launch({ headless: true });
+    const page = await browser.newPage();
+    await page.setContent(rawCopy);
+    const buffer = await page.pdf({
+      format: 'A4',
+      printBackground: false,
+      margin: {
+        left: '40px',
+        top: '60px',
+        right: '40px',
+        bottom: '40px',
+      },
+    });
+    await browser.close();
+    const documento = await Documento.findById(idDocumento);
+    sendBorrador(emailCliente, buffer, documento.nombre);
+    return buffer;
   };
 }
