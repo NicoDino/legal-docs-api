@@ -19,6 +19,7 @@ pasarela.post('/', (req, res) => {
         quantity: 1,
       },
     ],
+    notification_url: 'http://159.89.85.19:3000/v1/mercadopago/webhook',
     // back_urls: {
     //   success: 'localhost:4200/',
     //   failure: 'http://www.tu-sitio/failure',
@@ -32,6 +33,7 @@ pasarela.post('/', (req, res) => {
     .then(function (response) {
       // Este valor reemplazará el string "$$init_point$$" en tu HTML
       //   global.init_point = response.body.init_point;
+      console.log('LINK DE PAGO..', response.body);
       res.json(response.body.init_point);
     })
     .catch(function (error) {
@@ -46,7 +48,7 @@ pasarela.post('/webhook', (req, res) => {
       body += chunk.toString();
     });
     req.on('end', () => {
-      console.log(body, 'webhook response');
+      console.log('WEBHOOK RESPONSE...', body);
       res.end('ok');
     });
   }
