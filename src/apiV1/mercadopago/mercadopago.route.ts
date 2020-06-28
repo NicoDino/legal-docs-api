@@ -42,16 +42,16 @@ pasarela.post('/', (req, res) => {
 });
 
 pasarela.post('/webhook', (req, res) => {
-  if (req.method === 'POST') {
-    let body = '';
-    req.on('data', (chunk) => {
-      body += chunk.toString();
-    });
-    req.on('end', () => {
-      console.log('WEBHOOK RESPONSE...', body);
-      res.end('ok');
-    });
-  }
+  let body = '';
+  console.log('WEBHOOK REQ.BODY...', req.body);
+  req.on('data', (chunk) => {
+    body += chunk.toString();
+    console.log('WEBHOOK CHUNK...', body);
+  });
+  req.on('end', () => {
+    console.log('WEBHOOK RESPONSE...', body);
+    res.end('ok');
+  });
   return res.status(200);
 });
 export default pasarela;
