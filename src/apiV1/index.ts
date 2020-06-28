@@ -6,6 +6,7 @@ import faqs from './preguntas-frecuentes/faq.route';
 import documentos from './documentos/documento.route';
 import campos from './campos/campo.route';
 import borradores from './borradores/borrador.route';
+import pasarela from './mercadopago/mercadopago.route';
 
 const router: Router = Router();
 
@@ -16,6 +17,6 @@ router.use('/faqs', faqs);
 router.use('/documentos', documentos);
 router.use('/campos', campos);
 router.use('/borradores', borradores);
-
+router.use('/mercadopago', pasarela);
 
 export default router;
