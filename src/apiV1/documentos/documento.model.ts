@@ -16,6 +16,9 @@ const documentoSchema = Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Categoria',
   },
+  descripcion: {
+    type: String,
+  },
   html: {
     type: String,
   },
