@@ -14,6 +14,11 @@ const borradorSchema = Schema({
     autopopulate: true,
   },
   campos: [{ type: String }],
+  pago: {
+    type: String,
+    required: true,
+    enum: ['pendiente', 'pagado'],
+  },
 });
 
 borradorSchema.plugin(autopopulate);

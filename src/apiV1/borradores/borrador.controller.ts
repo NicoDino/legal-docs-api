@@ -3,7 +3,7 @@ import Borrador from './borrador.model';
 import { launch } from 'puppeteer';
 import { sendBorrador } from '../../helpers/mailer';
 import Documento from '../documentos/documento.model';
-
+import { sendLink } from '../mercadopago/mercadopago.helper';
 export default class BorradorController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -60,12 +60,14 @@ export default class BorradorController {
         emailCliente,
         documento,
         campos,
+        pago: 'pendiente',
       });
       const newBorrador = await borrador.save();
-      this.crearCopia(newBorrador, emailCliente, documento);
-      res.status(200).send({
-        success: true,
-      });
+      // await this.crearCopia(newBorrador, emailCliente, documento);
+      // res.status(200).send({
+      //   success: true,
+      // });
+      sendLink(newBorrador, req, res);
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -150,8 +152,8 @@ export default class BorradorController {
       },
     });
     await browser.close();
-    const documento = await Documento.findById(idDocumento);
-    sendBorrador(emailCliente, buffer, documento.nombre);
+    // const documento = await Documento.findById(idDocumento);
+    // sendBorrador(emailCliente, buffer, documento.nombre);
     return buffer;
   };
 }

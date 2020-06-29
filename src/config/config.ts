@@ -1,4 +1,4 @@
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 dotenv.config();
 
 export default {
@@ -14,4 +14,5 @@ export default {
   JWT_SECRET: process.env.JWT_SECRET,
   EMAIL: process.env.EMAIL,
   MAIL_PASS: process.env.MAIL_PASS,
+  MP_ACCESS_TOKEN: process.env.MP_ACCESS_TOKEN,
 };
