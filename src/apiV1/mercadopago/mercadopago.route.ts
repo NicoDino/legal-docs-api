@@ -19,7 +19,7 @@ pasarela.post('/', (req, res) => {
         quantity: 1,
       },
     ],
-    notification_url: 'http://159.89.85.19:3000/v1/mercadopago/webhook',
+    notification_url: 'http://159.89.85.19:3000/v1/mercadopago/webhook/:idPago',
     external_reference: 'REFERENCIA_UNICA_DE_PAGO',
 
     // back_urls: {
@@ -43,8 +43,9 @@ pasarela.post('/', (req, res) => {
     });
 });
 
-pasarela.post('/webhook', (req, res) => {
-  console.log('WEBHOOK REQ...', req);
+pasarela.post('/webhook/:idPago', (req, res) => {
+  console.log('WEBHOOK BODY...', req.body);
+  console.log('WEBHOOK PARAMS...', req.params);
 
   return res.status(200);
 });
