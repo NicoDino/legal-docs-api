@@ -31,6 +31,9 @@ export async function sendLink(borrador, req, res) {
       // auto_return: 'approved',
     };
 
+    console.log('ID BORRADOR', borrador._id);
+    console.log('PREFERENCE', preference);
+
     const response = await mercadopago.preferences.create(preference);
     res.json(response.body.init_point);
   } catch (err) {

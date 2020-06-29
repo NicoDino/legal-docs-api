@@ -46,7 +46,7 @@ pasarela.post('/', (req, res) => {
 
 pasarela.post('/webhook/:idPago', (req: Request, res: Response) => {
   console.log('WEBHOOK BODY...', req.body);
-  console.log('WEBHOOK PARAMS...', req.params.idPago);
+  console.log('WEBHOOK PARAMS...', req.params);
   return res.sendStatus(200);
 });
 export default pasarela;
