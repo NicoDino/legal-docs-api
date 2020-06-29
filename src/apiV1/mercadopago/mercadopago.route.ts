@@ -20,6 +20,8 @@ pasarela.post('/', (req, res) => {
       },
     ],
     notification_url: 'http://159.89.85.19:3000/v1/mercadopago/webhook',
+    external_reference: 'REFERENCIA_UNICA_DE_PAGO',
+
     // back_urls: {
     //   success: 'localhost:4200/',
     //   failure: 'http://www.tu-sitio/failure',
@@ -42,16 +44,8 @@ pasarela.post('/', (req, res) => {
 });
 
 pasarela.post('/webhook', (req, res) => {
-  let body = '';
   console.log('WEBHOOK REQ.BODY...', req.body);
-  req.on('data', (chunk) => {
-    body += chunk.toString();
-    console.log('WEBHOOK CHUNK...', body);
-  });
-  req.on('end', () => {
-    console.log('WEBHOOK RESPONSE...', body);
-    res.end('ok');
-  });
+
   return res.status(200);
 });
 export default pasarela;
