@@ -44,7 +44,7 @@ pasarela.post('/', (req, res) => {
 });
 
 pasarela.post('/webhook', (req, res) => {
-  console.log('WEBHOOK REQ.BODY...', req.body);
+  console.log('WEBHOOK REQ...', req);
 
   return res.status(200);
 });
