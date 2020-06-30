@@ -44,3 +44,14 @@ export async function sendLink(borrador, req, res) {
     });
   }
 }
+
+export async function getPaymentStatus(paymentId) {
+  mercadopago.configure({
+    access_token: config.MP_ACCESS_TOKEN,
+    // TODO comentar modo sandbox en prod
+    sandbox: true,
+  });
+  const pago = await mercadopago.payment.get(paymentId);
+  console.log('PAGO', pago);
+  return pago;
+}
