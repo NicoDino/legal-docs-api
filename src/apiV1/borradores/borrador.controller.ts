@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import Borrador from './borrador.model';
 import { launch } from 'puppeteer';
 import { sendBorrador } from '../../helpers/mailer';
-import Documento from '../documentos/documento.model';
 import { sendLink } from '../mercadopago/mercadopago.helper';
 export default class BorradorController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
@@ -31,7 +30,7 @@ export default class BorradorController {
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
-      const borrador = await Borrador.findById(req.params.id, { password: 0 });
+      const borrador = await Borrador.findById(req.params.id);
       if (!borrador) {
         return res.status(404).send({
           success: false,
@@ -132,7 +131,8 @@ export default class BorradorController {
     }
   };
 
-  crearCopia = async (borrador, emailCliente, idDocumento) => {
+  public crearCopia = async (idBorrador) => {
+    const borrador = await Borrador.findById(idBorrador);
     let rawCopy: string = borrador.documento.html;
     const campos = borrador.campos;
     campos.forEach((campo) => {
@@ -152,8 +152,7 @@ export default class BorradorController {
       },
     });
     await browser.close();
-    // const documento = await Documento.findById(idDocumento);
-    // sendBorrador(emailCliente, buffer, documento.nombre);
+    sendBorrador(borrador.emailCliente, buffer, borrador.documento.nombre);
     return buffer;
   };
 }

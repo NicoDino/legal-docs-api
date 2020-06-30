@@ -19,6 +19,9 @@ const borradorSchema = Schema({
     required: true,
     enum: ['pendiente', 'pagado'],
   },
+  idPagoMP: {
+    type: String,
+  },
 });
 
 borradorSchema.plugin(autopopulate);
