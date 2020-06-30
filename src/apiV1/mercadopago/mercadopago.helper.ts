@@ -52,6 +52,5 @@ export async function getPaymentStatus(paymentId) {
     sandbox: true,
   });
   const pago = await mercadopago.payment.get(paymentId);
-  console.log('PAGO', pago);
-  return pago;
+  return pago.status;
 }
