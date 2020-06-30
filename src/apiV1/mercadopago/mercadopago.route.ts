@@ -10,8 +10,8 @@ pasarela.post('/webhook/:idCopia', async (req: Request, res: Response) => {
   res.sendStatus(200);
   const borrador = await Borrador.findById(req.params.idCopia);
   borrador.pago = 'pagado';
-  console.log(req.body);
-  console.log(req.body.data);
+  console.log('BODY-->', req.body);
+  console.log('BODY.DATA-->', req.body.data);
   //borrador.idPagoMP = req.body.data.id;
   await borrador.save();
   borradorController.crearCopia(borrador._id);
