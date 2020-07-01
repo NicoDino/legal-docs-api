@@ -11,11 +11,16 @@ const borradorSchema = Schema({
   documento: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Documento',
-    autopopulate: true,
   },
   campos: [{ type: String }],
+  pago: {
+    type: String,
+    required: true,
+    enum: ['pendiente', 'pagado'],
+  },
+  idPagoMP: {
+    type: String,
+  },
 });
-
-borradorSchema.plugin(autopopulate);
 
 export default mongoose.model('Borrador', borradorSchema);

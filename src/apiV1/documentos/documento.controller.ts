@@ -25,7 +25,12 @@ export default class DocumentoController {
   public search = async (req: Request, res: Response): Promise<any> => {
     try {
       const busqueda = req.params.busqueda;
-      const documentos = await Documento.find({ $or: [{ "nombre": { $regex: busqueda, $options: 'i' } }, { "nombresAlternativos": { $regex: busqueda, $options: 'i' } }] });
+      const documentos = await Documento.find({
+        $or: [
+          { nombre: { $regex: busqueda, $options: 'i' } },
+          { nombresAlternativos: { $regex: busqueda, $options: 'i' } },
+        ],
+      });
       if (!documentos) {
         return res.status(404).send({
           success: false,
@@ -45,7 +50,7 @@ export default class DocumentoController {
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
-      const documento = await Documento.findOne({ _id: req.params.id }).populate('categoria');
+      const documento = await Documento.findOne({ _id: req.params.id }).populate('categoria').populate('campos');
       if (!documento) {
         return res.status(404).send({
           success: false,
@@ -75,7 +80,7 @@ export default class DocumentoController {
         referencias,
         preview,
         precio,
-        descripcion
+        descripcion,
       });
       const newDocumento = await documento.save();
       res.status(201).send({
