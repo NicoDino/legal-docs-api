@@ -12,7 +12,8 @@ pasarela.post('/webhook/:idCopia', async (req: Request, res: Response) => {
     console.log(1);
     const idPago = req.body.data.id;
     const statusPago = await getPaymentStatus(idPago);
-    if (statusPago === 'approved') {
+    console.log(statusPago);
+    if (statusPago == 'approved') {
       console.log(2);
       const borrador = await Borrador.findById(req.params.idCopia);
       borrador.pago = 'pagado';
