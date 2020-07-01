@@ -36,7 +36,6 @@ const documentoSchema = Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Campo',
-      autopopulate: true,
     },
   ],
   preview: {
@@ -48,6 +47,5 @@ const documentoSchema = Schema({
     required: true,
   },
 });
-documentoSchema.plugin(autopopulate);
 
 export default mongoose.model('Documento', documentoSchema);

@@ -62,10 +62,12 @@ export default class BorradorController {
         pago: 'pendiente',
       });
       const newBorrador = await borrador.save();
+      /** para testear localmente */
       // await this.crearCopia(newBorrador, emailCliente, documento);
       // res.status(200).send({
       //   success: true,
       // });
+      /** Para correr en el servidor */
       sendLink(newBorrador, req, res);
     } catch (err) {
       res.status(500).send({
