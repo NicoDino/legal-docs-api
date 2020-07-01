@@ -22,6 +22,27 @@ export default class DocumentoController {
     }
   };
 
+  public search = async (req: Request, res: Response): Promise<any> => {
+    try {
+      const busqueda = req.params.busqueda;
+      const documentos = await Documento.find({ $or: [{ "nombre": { $regex: busqueda, $options: 'i' } }, { "nombresAlternativos": { $regex: busqueda, $options: 'i' } }] });
+      if (!documentos) {
+        return res.status(404).send({
+          success: false,
+          message: 'Documentos not found',
+          data: null,
+        });
+      }
+      res.json(documentos);
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: err.toString(),
+        data: null,
+      });
+    }
+  };
+
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
       const documento = await Documento.findOne({ _id: req.params.id }).populate('categoria');
@@ -43,7 +64,7 @@ export default class DocumentoController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { nombre, nombresAlternativos, categoria, html, tipo, referencias, preview, precio } = req.body;
+    const { nombre, nombresAlternativos, categoria, html, tipo, referencias, preview, precio, descripcion } = req.body;
     try {
       const documento = new Documento({
         nombre,
@@ -54,6 +75,7 @@ export default class DocumentoController {
         referencias,
         preview,
         precio,
+        descripcion
       });
       const newDocumento = await documento.save();
       res.status(201).send({

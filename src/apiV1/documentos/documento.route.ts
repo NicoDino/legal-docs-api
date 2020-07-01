@@ -11,8 +11,14 @@ documento.get('/', verifyToken, controller.findAll);
 // Retrieve public documentos
 documento.get('/public', controller.findAll);
 
+// Retrieve public documentos
+documento.get('/search/:busqueda', controller.search);
+
 // Retrieve a specific documento
 documento.get('/:id', verifyToken, controller.findOne);
+
+// Retrieve a specific documento public
+documento.get('/public/:id', controller.findOne);
 
 // Create a documento
 documento.post('/', verifyToken, controller.create);
