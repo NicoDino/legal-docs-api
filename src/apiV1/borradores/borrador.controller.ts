@@ -30,7 +30,7 @@ export default class BorradorController {
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
-      const borrador = await Borrador.findById(req.params.id);
+      const borrador = await Borrador.findById(req.params.id).populate('documento');
       if (!borrador) {
         return res.status(404).send({
           success: false,
@@ -134,7 +134,7 @@ export default class BorradorController {
   };
 
   public crearCopia = async (idBorrador) => {
-    const borrador = await Borrador.findById(idBorrador);
+    const borrador = await Borrador.findById(idBorrador).populate('documento');
     let rawCopy: string = borrador.documento.html;
     const campos = borrador.campos;
     campos.forEach((campo) => {
