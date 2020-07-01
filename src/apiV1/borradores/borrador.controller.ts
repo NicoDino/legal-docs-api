@@ -63,12 +63,12 @@ export default class BorradorController {
       });
       const newBorrador = await borrador.save();
       /** para testear localmente */
-      await this.crearCopia(newBorrador);
-      res.status(200).send({
-        success: true,
-      });
+      // await this.crearCopia(newBorrador);
+      // res.status(200).send({
+      //   success: true,
+      // });
       /** Para correr en el servidor */
-      // sendLink(newBorrador, req, res);
+      sendLink(newBorrador, req, res);
     } catch (err) {
       res.status(500).send({
         success: false,
