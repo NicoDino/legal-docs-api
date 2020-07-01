@@ -48,7 +48,7 @@ export async function sendBorrador(emailCliente, borrador, nombreDocumento) {
   const mailOptions = {
     from: `Legal Aid - <${config.EMAIL}>`, // sender address
     to: emailCliente, // list of receivers
-    subject: 'Código solicitado', // Subject line
+    subject: 'Documento solicitado', // Subject line
     html: `<p><b>Su documento Legal Aid se encuentra adjunto</b></p>
              <b>Gracias por utilizar nuestro servicio.</b>
               `,
