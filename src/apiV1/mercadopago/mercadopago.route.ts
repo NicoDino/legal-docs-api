@@ -15,7 +15,7 @@ pasarela.post('/webhook/:idCopia', async (req: Request, res: Response) => {
     console.log('PAYMENT STATUS', statusPago);
     borrador.pago = statusPago;
     if (statusPago == 'approved') {
-      /**El primer post que hace MP al webhook con el numero de orden 'merchant_order' */
+      /**Solo enviamos el documento una vez que el pago sea aprobado */
       borradorController.crearCopia(borrador._id);
     }
     await borrador.save();

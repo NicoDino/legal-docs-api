@@ -15,4 +15,5 @@ export default {
   EMAIL: process.env.EMAIL,
   MAIL_PASS: process.env.MAIL_PASS,
   MP_ACCESS_TOKEN: process.env.MP_ACCESS_TOKEN,
+  ENVIRONMENT: process.env.ENVIRONMENT,
 };
