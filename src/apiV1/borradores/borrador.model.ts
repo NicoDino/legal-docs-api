@@ -16,7 +16,6 @@ const borradorSchema = Schema({
   pago: {
     type: String,
     required: true,
-    enum: ['pendiente', 'pagado'],
   },
   idPagoMP: {
     type: String,
