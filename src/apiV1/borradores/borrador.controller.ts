@@ -4,6 +4,7 @@ import { launch } from 'puppeteer';
 import { sendBorrador } from '../../helpers/mailer';
 import { sendLink } from '../mercadopago/mercadopago.helper';
 import config from '../../config/config';
+import * as htmlToDoc from 'html-to-docx';
 
 const environment = config.ENVIRONMENT;
 export default class BorradorController {
@@ -160,7 +161,8 @@ export default class BorradorController {
       },
     });
     await browser.close();
-    sendBorrador(borrador.emailCliente, buffer, borrador.documento.nombre);
+    const docXBuffer = await htmlToDoc(rawCopy);
+    sendBorrador(borrador.emailCliente, buffer, docXBuffer, borrador.documento.nombre);
     return buffer;
   };
 }
