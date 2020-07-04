@@ -31,7 +31,7 @@ export async function sendToken(usuario, newToken) {
   });
 }
 
-export async function sendBorrador(emailCliente, borrador, nombreDocumento) {
+export async function sendBorrador(emailCliente, borrador, borradorDocx, nombreDocumento) {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -57,6 +57,11 @@ export async function sendBorrador(emailCliente, borrador, nombreDocumento) {
         // utf-8 string as an attachment
         filename: `${nombreDocumento}.pdf`,
         content: borrador,
+      },
+      {
+        // utf-8 string as an attachment
+        filename: `${nombreDocumento}.docx`,
+        content: borradorDocx,
       },
     ],
   };

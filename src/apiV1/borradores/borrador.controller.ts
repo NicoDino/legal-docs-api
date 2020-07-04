@@ -3,6 +3,10 @@ import Borrador from './borrador.model';
 import { launch } from 'puppeteer';
 import { sendBorrador } from '../../helpers/mailer';
 import { sendLink } from '../mercadopago/mercadopago.helper';
+import config from '../../config/config';
+import * as htmlToDoc from 'html-to-docx';
+
+const environment = config.ENVIRONMENT;
 export default class BorradorController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -62,13 +66,16 @@ export default class BorradorController {
         pago: 'pendiente',
       });
       const newBorrador = await borrador.save();
-      /** para testear localmente */
-      await this.crearCopia(newBorrador);
-      res.status(200).send({
-        success: true,
-      });
-      /** Para correr en el servidor */
-      // sendLink(newBorrador, req, res);
+      if (environment === 'LOCAL') {
+        /** para testear localmente */
+        await this.crearCopia(newBorrador);
+        res.status(200).send({
+          success: true,
+        });
+      } else {
+        /** Para correr en el servidor */
+        sendLink(newBorrador, req, res);
+      }
     } catch (err) {
       res.status(500).send({
         success: false,
@@ -154,7 +161,8 @@ export default class BorradorController {
       },
     });
     await browser.close();
-    sendBorrador(borrador.emailCliente, buffer, borrador.documento.nombre);
+    const docXBuffer = await htmlToDoc(rawCopy);
+    sendBorrador(borrador.emailCliente, buffer, docXBuffer, borrador.documento.nombre);
     return buffer;
   };
 }
