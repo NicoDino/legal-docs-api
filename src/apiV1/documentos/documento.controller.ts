@@ -7,7 +7,7 @@ export default class DocumentoController {
    */
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
-      const documentos = await Documento.find({}, 'nombre categoria');
+      const documentos = await Documento.find();
       if (!documentos) {
         return res.status(404).send({
           success: false,
