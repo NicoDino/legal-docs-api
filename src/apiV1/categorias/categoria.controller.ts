@@ -4,8 +4,7 @@ import Categoria from './categoria.model';
 export default class CategoriaController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
-      // El uso actual del find no requiere popular descendientes
-      const categorias = await Categoria.find();
+      const categorias = await Categoria.find().populate('descendientes');
       if (!categorias) {
         return res.status(404).send({
           success: false,
