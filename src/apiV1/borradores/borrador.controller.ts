@@ -19,10 +19,7 @@ export default class BorradorController {
         });
       }
 
-      res.status(200).send({
-        success: true,
-        data: borradors,
-      });
+      res.send(borradors);
     } catch (err) {
       res.status(500).send({
         success: false,

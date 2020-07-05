@@ -1,15 +1,14 @@
-import { Request, Response } from "express";
-import Categoria from "./categoria.model";
+import { Request, Response } from 'express';
+import Categoria from './categoria.model';
 
 export default class CategoriaController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
-      // const categorias = await Categoria.find().populate('descendientes').exec();
-      const categorias = await Categoria.find();
+      const categorias = await Categoria.find().populate('descendientes');
       if (!categorias) {
         return res.status(404).send({
           success: false,
-          message: "Categorias no encontradas",
+          message: 'Categorias no encontradas',
           data: null,
         });
       }
@@ -25,12 +24,11 @@ export default class CategoriaController {
 
   public findAllPublic = async (req: Request, res: Response): Promise<any> => {
     try {
-      // const categorias = await Categoria.find().populate('descendientes').exec();
-      const categorias = await Categoria.find();
+      const categorias = await Categoria.find().populate('descendientes');
       if (!categorias) {
         return res.status(404).send({
           success: false,
-          message: "Categorias no encontradas",
+          message: 'Categorias no encontradas',
           data: null,
         });
       }
@@ -50,7 +48,7 @@ export default class CategoriaController {
       if (!categoria) {
         return res.status(404).send({
           success: false,
-          message: "Categoria no encontrada",
+          message: 'Categoria no encontrada',
           data: null,
         });
       }
@@ -98,7 +96,7 @@ export default class CategoriaController {
           $set: {
             nombre,
             tipo,
-            descendientes
+            descendientes,
           },
         },
         { new: true }
@@ -106,7 +104,7 @@ export default class CategoriaController {
       if (!categoriaUpdated) {
         return res.status(404).send({
           success: false,
-          message: "Categoria no encontrada",
+          message: 'Categoria no encontrada',
           data: null,
         });
       }
@@ -130,7 +128,7 @@ export default class CategoriaController {
       if (!categoria) {
         return res.status(404).send({
           success: false,
-          message: "Categoria no encontrada",
+          message: 'Categoria no encontrada',
           data: null,
         });
       }

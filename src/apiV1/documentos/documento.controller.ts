@@ -2,6 +2,9 @@ import { Request, Response } from 'express';
 import Documento from './documento.model';
 
 export default class DocumentoController {
+  /** Usado para popular documentos dentro del arbol en la vista publica
+   * solo es necesario retornar id, nombre & id_categoria
+   */
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
       const documentos = await Documento.find();

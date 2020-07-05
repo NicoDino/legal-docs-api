@@ -1,6 +1,5 @@
 import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-import * as autopopulate from 'mongoose-autopopulate';
 
 const borradorSchema = Schema({
   emailCliente: {

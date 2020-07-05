@@ -1,6 +1,5 @@
 import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-import * as autopopulate from 'mongoose-autopopulate';
 
 const campoSchema = Schema({
   identificador: {
@@ -30,10 +29,7 @@ const campoSchema = Schema({
   documento: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Documento',
-    autopopulate: true,
   },
 });
-
-campoSchema.plugin(autopopulate);
 
 export default mongoose.model('Campo', campoSchema);
