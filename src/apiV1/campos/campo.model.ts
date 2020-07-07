@@ -13,10 +13,15 @@ const campoSchema = Schema({
     type: String,
     trim: true,
   },
+  /** Una payuda extra para el cliente */
+  ayuda: {
+    type: String,
+    trim: true,
+  },
   tipo: {
     type: String,
     required: true,
-    enum: ['boolean', 'opciones', 'input'],
+    enum: ['boolean', 'opciones', 'input', 'date'],
   },
   opciones: {
     type: [String],
