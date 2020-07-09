@@ -61,6 +61,9 @@ export default class DocumentoController {
           data: null,
         });
       }
+      documento.campos.sort((a, b) => {
+        a.posicion < b.posicion ? -1 : 1;
+      });
       res.json(documento);
     } catch (err) {
       res.status(500).send({
@@ -117,7 +120,11 @@ export default class DocumentoController {
           data: null,
         });
       }
-      res.json(documentoUpdated);
+      const documento = await Documento.findOne({ _id: documentoUpdated.id }).populate('categoria').populate('campos');
+      documento.campos.sort((a, b) => {
+        a.posicion < b.posicion ? -1 : 1;
+      });
+      res.json(documento);
     } catch (err) {
       res.status(500).send({
         success: false,

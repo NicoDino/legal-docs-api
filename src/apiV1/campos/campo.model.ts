@@ -7,6 +7,13 @@ const campoSchema = Schema({
     required: true,
     trim: true,
   },
+  /** La posicion indica el lugar en donde se encuentra el campo dentro del texto
+   *  de esa manera los arrays de campos de c/ documento pueden ordenarse luego de una insercion
+   */
+  //TODO: debe ser requerido
+  posicion: {
+    type: Number,
+  },
   /** Una pequeña explicación del propósito del campo para el cliente */
   descripcion: {
     type: String,
