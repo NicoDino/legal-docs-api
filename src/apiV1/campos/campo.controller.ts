@@ -44,12 +44,13 @@ export default class CampoController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { identificador, descripcion, tipo, opciones, min, max, documento, posicion } = req.body;
+    const { identificador, descripcion, tipo, ayuda, opciones, min, max, documento, posicion } = req.body;
     try {
       const campo = new Campo({
         identificador,
         descripcion,
         tipo,
+        ayuda,
         opciones,
         min,
         max,
