@@ -44,7 +44,7 @@ export default class CampoController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { identificador, descripcion, tipo, opciones, min, max, documento } = req.body;
+    const { identificador, descripcion, tipo, opciones, min, max, documento, posicion } = req.body;
     try {
       const campo = new Campo({
         identificador,
@@ -54,7 +54,9 @@ export default class CampoController {
         min,
         max,
         documento,
+        posicion,
       });
+      console.log('NUEVOCAMPO--->', campo);
       const newCampo = await campo.save();
       if (newCampo.documento) {
         const documento = await Documento.findById(newCampo.documento);
@@ -103,7 +105,7 @@ export default class CampoController {
 
   public remove = async (req: Request, res: Response): Promise<any> => {
     try {
-      const campo = await Campo.findById(req.params.id);
+      const campo = await Campo.findById(req.params.id).populate('documento');
 
       if (!campo) {
         return res.status(404).send({
