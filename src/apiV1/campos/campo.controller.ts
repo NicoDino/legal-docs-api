@@ -57,12 +57,12 @@ export default class CampoController {
         documento,
         posicion,
       });
-      console.log('NUEVOCAMPO--->', campo);
       const newCampo = await campo.save();
       if (newCampo.documento) {
-        const documento = await Documento.findById(newCampo.documento);
+        const documento = await Documento.findById(newCampo.documento).populate('campos');
         documento.campos.push(newCampo._id);
         await documento.save();
+        await this.recalcularPosiciones(newCampo.documento);
       }
       res.json(newCampo);
     } catch (err) {
@@ -73,6 +73,17 @@ export default class CampoController {
       });
     }
   };
+
+  private async recalcularPosiciones(idDocumento) {
+    const documento = await Documento.findById(idDocumento).populate('campos').lean();
+    let nuevaPosicion = 0;
+    for (let campo of documento.campos) {
+      nuevaPosicion = documento.html.indexOf(campo.identificador);
+      await Campo.findByIdAndUpdate(campo._id, {
+        $set: { posicion: nuevaPosicion },
+      });
+    }
+  }
 
   public update = async (req: Request, res: Response): Promise<any> => {
     const update = req.body;
