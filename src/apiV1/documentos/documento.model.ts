@@ -37,6 +37,7 @@ const documentoSchema = Schema({
       ref: 'Campo',
     },
   ],
+  camposInsertados: { type: Number },
   preview: {
     // Base64
     type: String,

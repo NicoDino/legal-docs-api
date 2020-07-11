@@ -5,8 +5,11 @@ export async function sendToken(usuario, newToken) {
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     service: 'gmail',
+    port: 587,
+    secure: false,
+    requireTLS: true,
     auth: {
-      user: `"LEGAL AID" <${config.EMAIL}>`, // generated ethereal user
+      user: config.EMAIL, // generated ethereal user
       pass: config.MAIL_PASS, // generated ethereal password
     },
   });

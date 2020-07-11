@@ -44,10 +44,11 @@ export default class CampoController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { identificador, descripcion, tipo, ayuda, opciones, min, max, documento, posicion } = req.body;
+    const { identificador, nombre, descripcion, tipo, ayuda, opciones, min, max, documento, posicion } = req.body;
     try {
       const campo = new Campo({
         identificador,
+        nombre,
         descripcion,
         tipo,
         ayuda,
@@ -57,12 +58,12 @@ export default class CampoController {
         documento,
         posicion,
       });
-      console.log('NUEVOCAMPO--->', campo);
+
       const newCampo = await campo.save();
+
       if (newCampo.documento) {
-        const documento = await Documento.findById(newCampo.documento);
-        documento.campos.push(newCampo._id);
-        await documento.save();
+        let promiseArray = [this.actualizarDocumento(newCampo), this.recalcularPosiciones(newCampo.documento)];
+        await Promise.all(promiseArray);
       }
       res.json(newCampo);
     } catch (err) {
@@ -73,6 +74,32 @@ export default class CampoController {
       });
     }
   };
+
+  private async actualizarDocumento(newCampo: any) {
+    const documento = await Documento.findById(newCampo.documento);
+    documento.campos.push(newCampo._id);
+    if (documento.camposInsertados) {
+      documento.camposInsertados++;
+    } else {
+      documento.camposInsertados = 1;
+    }
+    await documento.save();
+  }
+
+  private async recalcularPosiciones(idDocumento) {
+    const documento = await Documento.findById(idDocumento).populate('campos').lean();
+    let nuevaPosicion = 0;
+    let updatePromises = [];
+    for (let campo of documento.campos) {
+      nuevaPosicion = documento.html.indexOf(campo.identificador);
+      updatePromises.push(
+        Campo.findByIdAndUpdate(campo._id, {
+          $set: { posicion: nuevaPosicion },
+        })
+      );
+    }
+    await Promise.all(updatePromises);
+  }
 
   public update = async (req: Request, res: Response): Promise<any> => {
     const update = req.body;

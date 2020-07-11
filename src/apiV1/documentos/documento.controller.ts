@@ -89,11 +89,7 @@ export default class DocumentoController {
         descripcion,
       });
       const newDocumento = await documento.save();
-      res.status(201).send({
-        success: false,
-        message: 'Documento successfully created',
-        data: newDocumento,
-      });
+      res.send(newDocumento);
     } catch (err) {
       res.status(500).send({
         success: false,
