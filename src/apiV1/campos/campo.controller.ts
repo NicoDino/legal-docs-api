@@ -62,6 +62,12 @@ export default class CampoController {
       if (newCampo.documento) {
         const documento = await Documento.findById(newCampo.documento).populate('campos');
         documento.campos.push(newCampo._id);
+        if (documento.camposInsertados) {
+          documento.camposInsertados++;
+        } else {
+          documento.camposInsertados = 1;
+        }
+
         await documento.save();
         await this.recalcularPosiciones(newCampo.documento);
       }
