@@ -7,6 +7,11 @@ const campoSchema = Schema({
     required: true,
     trim: true,
   },
+  nombre: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   /** La posicion indica el lugar en donde se encuentra el campo dentro del texto
    *  de esa manera los arrays de campos de c/ documento pueden ordenarse luego de una insercion
    */
