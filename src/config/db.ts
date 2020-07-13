@@ -1,12 +1,11 @@
 import * as mongoose from 'mongoose';
-import CONFIG from './config';
-
+import { DB_HOST } from '../config.private';
 mongoose.set('useCreateIndex', true);
 
 // Connecting to the database
 export default (async () => {
   try {
-    await mongoose.connect(CONFIG.DB_HOST, {
+    await mongoose.connect(DB_HOST, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useFindAndModify: false,

@@ -1,8 +1,6 @@
 import app from './App';
-import CONFIG from './config/config';
 import './config/db';
-
-const PORT = CONFIG.PORT;
+import { PORT } from './config.private';
 
 app.listen(PORT, (err) => {
   if (err) {

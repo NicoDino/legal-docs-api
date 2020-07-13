@@ -1,4 +1,5 @@
-import config from '../config/config';
+import { EMAIL, MAIL_PASS } from '../config.private';
+
 const nodemailer = require('nodemailer');
 
 export async function sendToken(usuario, newToken) {
@@ -9,14 +10,14 @@ export async function sendToken(usuario, newToken) {
     secure: false,
     requireTLS: true,
     auth: {
-      user: config.EMAIL, // generated ethereal user
-      pass: config.MAIL_PASS, // generated ethereal password
+      user: EMAIL, // generated ethereal user
+      pass: MAIL_PASS, // generated ethereal password
     },
   });
 
   // setup email data with unicode symbols
   const mailOptions = {
-    from: `Legal Aid - <${config.EMAIL}>`, // sender address
+    from: `Legal Aid - <${EMAIL}>`, // sender address
     to: usuario.email, // list of receivers
     subject: 'Código solicitado', // Subject line
     html: `<p><b>Utilice el siguiente código para reestablecer sus credenciales</b></p>
@@ -42,14 +43,14 @@ export async function sendBorrador(emailCliente, borrador, borradorDocx, nombreD
     secure: false,
     requireTLS: true,
     auth: {
-      user: config.EMAIL, // generated ethereal user
-      pass: config.MAIL_PASS, // generated ethereal password
+      user: EMAIL, // generated ethereal user
+      pass: MAIL_PASS, // generated ethereal password
     },
   });
 
   // setup email data with unicode symbols
   const mailOptions = {
-    from: `Legal Aid - <${config.EMAIL}>`, // sender address
+    from: `Legal Aid - <${EMAIL}>`, // sender address
     to: emailCliente, // list of receivers
     subject: 'Documento solicitado', // Subject line
     html: `<p><b>Su documento Legal Aid se encuentra adjunto</b></p>
