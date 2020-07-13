@@ -64,7 +64,7 @@ export default class BorradorController {
         pago: 'pendiente',
       });
       const newBorrador = await borrador.save();
-      if (environment === 'LOCAL') {
+      if (environment == 'LOCAL') {
         /** para testear localmente */
         await this.crearCopia(newBorrador);
         res.status(200).send({
