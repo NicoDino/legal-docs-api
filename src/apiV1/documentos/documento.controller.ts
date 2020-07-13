@@ -75,7 +75,7 @@ export default class DocumentoController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { nombre, nombresAlternativos, categoria, html, tipo, referencias, preview, precio, descripcion } = req.body;
+    const { nombre, nombresAlternativos, categoria, html, tipo, referencias, preview, precio, descripcion, hojasDesde, hojasHasta } = req.body;
     try {
       const documento = new Documento({
         nombre,
@@ -86,6 +86,8 @@ export default class DocumentoController {
         referencias,
         preview,
         precio,
+        hojasDesde,
+        hojasHasta,
         descripcion,
       });
       const newDocumento = await documento.save();

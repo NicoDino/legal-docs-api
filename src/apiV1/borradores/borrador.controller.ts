@@ -10,7 +10,7 @@ const environment = config.ENVIRONMENT;
 export default class BorradorController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
-      const borradors = await Borrador.find();
+      const borradors = await Borrador.find().sort({ pago: 1 }).populate('documento');;
       if (!borradors) {
         return res.status(404).send({
           success: false,
@@ -54,12 +54,13 @@ export default class BorradorController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { emailCliente, documento, campos } = req.body;
+    const { emailCliente, documento, campos, createdAt } = req.body;
     try {
       const borrador = new Borrador({
         emailCliente,
         documento,
         campos,
+        createdAt,
         pago: 'pendiente',
       });
       const newBorrador = await borrador.save();

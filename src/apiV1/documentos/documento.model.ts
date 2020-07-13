@@ -46,6 +46,14 @@ const documentoSchema = Schema({
     type: Number,
     required: true,
   },
+  hojasDesde: {
+    type: Number,
+    required: true,
+  },
+  hojasHasta: {
+    type: Number,
+    required: true,
+  }
 });
 
 export default mongoose.model('Documento', documentoSchema);

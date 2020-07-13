@@ -45,7 +45,7 @@ export default class FaqController {
 
     public findOne = async (req: Request, res: Response): Promise<any> => {
         try {
-            const faq = await Faq.findById(req.params.id, { password: 0 });
+            const faq = await Faq.findById(req.params.id);
             if (!faq) {
                 return res.status(404).send({
                     success: false,
@@ -53,11 +53,7 @@ export default class FaqController {
                     data: null
                 });
             }
-
-            res.status(200).send({
-                success: true,
-                data: faq
-            });
+            res.json(faq);
         } catch (err) {
             res.status(500).send({
                 success: false,
@@ -105,14 +101,11 @@ export default class FaqController {
             if (!faqUpdated) {
                 return res.status(404).send({
                     success: false,
-                    message: 'Faq not found',
+                    message: 'Pregunta frecuente no encontrada',
                     data: null
                 });
             }
-            res.status(200).send({
-                success: true,
-                data: faqUpdated
-            });
+            res.json(faqUpdated);
         } catch (err) {
             res.status(500).send({
                 success: false,

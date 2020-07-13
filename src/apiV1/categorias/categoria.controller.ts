@@ -4,7 +4,10 @@ import Categoria from './categoria.model';
 export default class CategoriaController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
-      const categorias = await Categoria.find().populate('descendientes');
+      const categorias = await Categoria.find().populate({
+        path: 'descendientes',
+        populate: { path: 'descendientes' }
+      });
       if (!categorias) {
         return res.status(404).send({
           success: false,
@@ -24,7 +27,10 @@ export default class CategoriaController {
 
   public findAllPublic = async (req: Request, res: Response): Promise<any> => {
     try {
-      const categorias = await Categoria.find().populate('descendientes');
+      const categorias = await Categoria.find().populate({
+        path: 'descendientes',
+        populate: { path: 'descendientes' }
+      });
       if (!categorias) {
         return res.status(404).send({
           success: false,
@@ -74,7 +80,11 @@ export default class CategoriaController {
       // Si la categoría insertada tiene padre, agregarla como descendencia del padre
       if (newCategoria.padre) {
         const padre = await Categoria.findById(newCategoria.padre._id);
-        padre.descendientes.push(newCategoria._id);
+        if (padre.descendientes) {
+          padre.descendientes.push(newCategoria._id);
+        } else {
+          padre.descendientes = [newCategoria._id];
+        }
         await padre.save();
       }
       res.json(newCategoria);
@@ -108,10 +118,7 @@ export default class CategoriaController {
           data: null,
         });
       }
-      res.status(200).send({
-        success: true,
-        data: categoriaUpdated,
-      });
+      res.json(categoriaUpdated);
     } catch (err) {
       res.status(500).send({
         success: false,
