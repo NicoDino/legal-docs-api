@@ -1,4 +1,4 @@
-import { EMAIL, MAIL_PASS } from '../../config.private';
+import { EMAIL, MAIL_PASS } from '../config.private';
 
 const nodemailer = require('nodemailer');
 

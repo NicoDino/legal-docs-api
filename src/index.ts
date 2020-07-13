@@ -1,6 +1,6 @@
 import app from './App';
 import './config/db';
-import { PORT } from '../config.private';
+import { PORT } from './config.private';
 
 app.listen(PORT, (err) => {
   if (err) {

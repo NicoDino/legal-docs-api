@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../../config.private';
+import { JWT_SECRET } from '../config.private';
 
 const verifyToken = async (req, res, next): Promise<any> => {
   // check header or url parameters or post parameters for token

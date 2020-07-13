@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 
 import User from '../users/user.model';
-import { JWT_SECRET } from '../../../config.private';
+import { JWT_SECRET } from '../../config.private';
 
 export default class UserController {
   public authenticate = async (req: Request, res: Response): Promise<any> => {

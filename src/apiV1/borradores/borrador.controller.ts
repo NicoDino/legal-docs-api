@@ -5,7 +5,7 @@ import { sendBorrador } from '../../helpers/mailer';
 import { sendLink } from '../mercadopago/mercadopago.helper';
 
 import * as htmlToDoc from 'html-to-docx';
-import { ENVIRONMENT } from '../../../config.private';
+import { ENVIRONMENT } from '../../config.private';
 
 const environment = ENVIRONMENT;
 export default class BorradorController {

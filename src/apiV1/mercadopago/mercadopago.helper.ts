@@ -1,6 +1,6 @@
 import mercadopago = require('mercadopago');
 import Documento from '../documentos/documento.model';
-import { MP_ACCESS_TOKEN } from '../../../config.private';
+import { MP_ACCESS_TOKEN } from '../../config.private';
 
 export async function sendLink(borrador, req, res) {
   try {

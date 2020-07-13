@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { DB_HOST } from '../../config.private';
+import { DB_HOST } from '../config.private';
 mongoose.set('useCreateIndex', true);
 
 // Connecting to the database
