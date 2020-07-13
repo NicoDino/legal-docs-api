@@ -19,6 +19,9 @@ const borradorSchema = Schema({
   idPagoMP: {
     type: String,
   },
+  createdAt: {
+    type: Date
+  }
 });
 
 export default mongoose.model('Borrador', borradorSchema);
