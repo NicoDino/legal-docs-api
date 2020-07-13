@@ -1,12 +1,12 @@
 import mercadopago = require('mercadopago');
-import * as config from '../../../config.private';
 import Documento from '../documentos/documento.model';
+import { MP_ACCESS_TOKEN } from '../../../config.private';
 
 export async function sendLink(borrador, req, res) {
   try {
     // Agrega credenciales
     mercadopago.configure({
-      access_token: config.MP_ACCESS_TOKEN,
+      access_token: MP_ACCESS_TOKEN,
       // TODO comentar modo sandbox en prod
       sandbox: true,
     });
@@ -42,7 +42,7 @@ export async function sendLink(borrador, req, res) {
 
 export async function getPaymentStatus(paymentId) {
   mercadopago.configure({
-    access_token: config.MP_ACCESS_TOKEN,
+    access_token: MP_ACCESS_TOKEN,
     // TODO comentar modo sandbox en prod
     sandbox: true,
   });

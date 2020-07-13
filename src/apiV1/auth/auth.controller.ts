@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
-import * as config from '../../../config.private';
 
 import User from '../users/user.model';
+import { JWT_SECRET } from '../../../config.private';
 
 export default class UserController {
   public authenticate = async (req: Request, res: Response): Promise<any> => {
@@ -30,7 +30,7 @@ export default class UserController {
         });
       }
 
-      const token = await jwt.sign({ email }, config.JWT_SECRET, {
+      const token = await jwt.sign({ email }, JWT_SECRET, {
         expiresIn: 10000,
       });
 

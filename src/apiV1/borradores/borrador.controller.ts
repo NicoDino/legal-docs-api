@@ -3,11 +3,11 @@ import Borrador from './borrador.model';
 import { launch } from 'puppeteer';
 import { sendBorrador } from '../../helpers/mailer';
 import { sendLink } from '../mercadopago/mercadopago.helper';
-import * as config from '../../../config.private';
 
 import * as htmlToDoc from 'html-to-docx';
+import { ENVIRONMENT } from '../../../config.private';
 
-const environment = config.ENVIRONMENT;
+const environment = ENVIRONMENT;
 export default class BorradorController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
