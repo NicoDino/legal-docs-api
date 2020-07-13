@@ -1,5 +1,5 @@
 import mercadopago = require('mercadopago');
-import config from '../../config/config';
+import * as config from '../../../config.private';
 import Documento from '../documentos/documento.model';
 
 export async function sendLink(borrador, req, res) {

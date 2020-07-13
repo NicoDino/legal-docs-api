@@ -1,5 +1,5 @@
 settings.json
-
+config.private.ts
 # Logs
 logs
 *.log

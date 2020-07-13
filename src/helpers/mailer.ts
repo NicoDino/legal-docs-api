@@ -1,4 +1,5 @@
-import config from '../config/config';
+import * as config from '../../config.private';
+
 const nodemailer = require('nodemailer');
 
 export async function sendToken(usuario, newToken) {

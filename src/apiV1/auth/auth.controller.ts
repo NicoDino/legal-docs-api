@@ -1,8 +1,9 @@
-import * as bcrypt from "bcrypt";
-import { Request, Response } from "express";
-import * as jwt from "jsonwebtoken";
-import config from "../../config/config";
-import User from "../users/user.model";
+import * as bcrypt from 'bcrypt';
+import { Request, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
+import * as config from '../../../config.private';
+
+import User from '../users/user.model';
 
 export default class UserController {
   public authenticate = async (req: Request, res: Response): Promise<any> => {
@@ -10,7 +11,7 @@ export default class UserController {
     if (!email || !password) {
       return res.status(404).send({
         success: false,
-        message: "No Autorizado",
+        message: 'No Autorizado',
       });
     }
     try {
@@ -18,14 +19,14 @@ export default class UserController {
       if (!user) {
         return res.status(404).send({
           success: false,
-          message: "Usuario inexistente",
+          message: 'Usuario inexistente',
         });
       }
       const matchPasswords = await bcrypt.compare(password, user.password);
       if (!matchPasswords) {
         return res.status(401).send({
           success: false,
-          message: "No autorizado",
+          message: 'No autorizado',
         });
       }
 
@@ -34,7 +35,7 @@ export default class UserController {
       });
 
       res.json({
-        user: { nombre: user.nombre, apellido: user.apellido, email: user.email, id: user._id},
+        user: { nombre: user.nombre, apellido: user.apellido, email: user.email, id: user._id },
         token,
       });
     } catch (err) {
@@ -61,7 +62,7 @@ export default class UserController {
 
       res.status(201).send({
         success: false,
-        message: "User Successfully created",
+        message: 'User Successfully created',
         data: newUser,
       });
     } catch (err) {

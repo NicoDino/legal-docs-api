@@ -1,6 +1,5 @@
 import * as mongoose from 'mongoose';
-import CONFIG from './config';
-
+import * as CONFIG from '../../config.private';
 mongoose.set('useCreateIndex', true);
 
 // Connecting to the database

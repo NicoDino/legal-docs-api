@@ -3,7 +3,8 @@ import Borrador from './borrador.model';
 import { launch } from 'puppeteer';
 import { sendBorrador } from '../../helpers/mailer';
 import { sendLink } from '../mercadopago/mercadopago.helper';
-import config from '../../config/config';
+import * as config from '../../../config.private';
+
 import * as htmlToDoc from 'html-to-docx';
 
 const environment = config.ENVIRONMENT;
