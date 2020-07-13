@@ -64,13 +64,14 @@ export default class BorradorController {
         pago: 'pendiente',
       });
       const newBorrador = await borrador.save();
-      if (environment == 'LOCAL') {
+      if (environment.toString() === 'LOCAL') {
         /** para testear localmente */
         await this.crearCopia(newBorrador);
         res.status(200).send({
           success: true,
         });
-      } else {
+      }
+      if (environment.toString() === 'CLOUD') {
         /** Para correr en el servidor */
         sendLink(newBorrador, req, res);
       }
