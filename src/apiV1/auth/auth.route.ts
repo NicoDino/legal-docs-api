@@ -9,6 +9,6 @@ const controller = new Controller();
 user.post('/authenticate', controller.authenticate);
 
 // Register New User
-user.post('/register',verifyToken, controller.register);
+user.post('/register', controller.register);
 
 export default user;
