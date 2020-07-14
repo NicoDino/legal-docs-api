@@ -25,3 +25,4 @@
 - Nos movemos la branch correspondiente y hacemos `git pull` + `npm i` si es necesario
 - Si es necesario, actualizamos el archivo config.private.ts dentro de ../legal-aid-api/src
 - `npm run build`
+- `pm2 restart ecosystem.config.js`
