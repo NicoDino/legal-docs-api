@@ -21,7 +21,7 @@ export async function sendLink(borrador, req, res) {
           quantity: 1,
         },
       ],
-      notification_url: `http://159.89.85.19:3000/v1/mercadopago/webhook/${borrador._id}`,
+      notification_url: `http://159.89.85.19:3200/v1/mercadopago/webhook/${borrador._id}`,
       /** Modificar con links reales de la aplicacion */
       // back_urls: {
       //   success: 'localhost:4200/fin-operacion/exito',
