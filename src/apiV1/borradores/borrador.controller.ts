@@ -11,7 +11,7 @@ const environment = ENVIRONMENT;
 export default class BorradorController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
-      const borradors = await Borrador.find().sort({ pago: 1 }).populate('documento');;
+      const borradors = await Borrador.find().sort({ pago: 1 }).populate('documento');
       if (!borradors) {
         return res.status(404).send({
           success: false,
@@ -147,6 +147,7 @@ export default class BorradorController {
     campos.forEach((campo) => {
       rawCopy = rawCopy.replace('__________', campo);
     });
+    rawCopy = rawCopy.split('filter: blur(6px);').join('');
     const browser = await launch({ headless: true });
     const page = await browser.newPage();
     await page.setContent(rawCopy);

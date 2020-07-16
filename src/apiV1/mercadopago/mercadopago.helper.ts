@@ -1,6 +1,6 @@
 import mercadopago = require('mercadopago');
 import Documento from '../documentos/documento.model';
-import { MP_ACCESS_TOKEN } from '../../config.private';
+import { MP_ACCESS_TOKEN, API_URL, APP_URL } from '../../config.private';
 
 export async function sendLink(borrador, req, res) {
   try {
@@ -21,13 +21,11 @@ export async function sendLink(borrador, req, res) {
           quantity: 1,
         },
       ],
-      notification_url: `http://159.89.85.19:3200/v1/mercadopago/webhook/${borrador._id}`,
-      /** Modificar con links reales de la aplicacion */
-      // back_urls: {
-      //   success: 'localhost:4200/fin-operacion/exito',
-      //   failure: 'localhost:4200/fin-operacion/error'
-      // },
-      // auto_return: 'approved',
+      notification_url: `${API_URL}/v1/mercadopago/webhook/${borrador._id}`,
+      back_urls: {
+        success: `${APP_URL}/fin-operacion/exito`,
+        failure: `${APP_URL}/fin-operacion/error`,
+      },
     };
     const response = await mercadopago.preferences.create(preference);
     res.json(response.body.init_point);
