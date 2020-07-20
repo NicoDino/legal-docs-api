@@ -50,11 +50,10 @@ export async function sendBorrador(emailCliente, borrador, nombreDocumento) {
       pass: MAIL_PASS, // generated ethereal password
     },
   });
-  const filePath = path.join(__dirname, '../templates/emails/send_borrador.html');
+  const filePath = path.join(__dirname, '../../templates/emails/send_borrador.html');
   const source = fs.readFileSync(filePath, 'utf-8').toString();
   const template = handlebars.compile(source);
-  const replacements = {
-  };
+  const replacements = {};
   const htmlToSend = template(replacements);
   // setup email data with unicode symbols
   const mailOptions = {
