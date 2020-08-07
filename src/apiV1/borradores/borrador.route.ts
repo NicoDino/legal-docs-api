@@ -14,6 +14,9 @@ borrador.get('/:id', controller.findOne);
 // Create a borrador
 borrador.post('/', controller.create);
 
+// Reenviar borrador
+borrador.post('/reenviar', controller.reenviar);
+
 // Update a borrador with Id
 borrador.put('/:id', verifyToken, controller.update);
 

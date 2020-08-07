@@ -54,7 +54,6 @@ export default class BorradorController {
 
   public create = async (req: Request, res: Response): Promise<any> => {
     const { emailCliente, documento, campos, createdAt } = req.body.borrador;
-    const esReenvio = req.body.reenviar;
     try {
       const borrador = new Borrador({
         emailCliente,
@@ -64,7 +63,7 @@ export default class BorradorController {
         pago: 'pendiente',
       });
       const newBorrador = await borrador.save();
-      if (environment.toString() === 'LOCAL' || esReenvio) {
+      if (environment.toString() === 'LOCAL') {
         /** para testear localmente */
         await this.crearCopia(newBorrador);
         res.status(200).send({
@@ -74,6 +73,30 @@ export default class BorradorController {
       if (environment.toString() === 'CLOUD') {
         /** Para correr en el servidor */
         sendLink(newBorrador, req, res);
+      }
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: err.toString(),
+        data: null,
+      });
+    }
+  };
+
+  public reenviar = async (req: Request, res: Response): Promise<any> => {
+    try {
+      let idBorrador = req.body.borrador._id;
+      if (environment.toString() === 'LOCAL') {
+        /** para testear localmente */
+        await this.crearCopia(idBorrador);
+        res.status(200).send({
+          success: true,
+        });
+      }
+      if (environment.toString() === 'CLOUD') {
+        /** Para correr en el servidor */
+        const borrador = await Borrador.findById(idBorrador);
+        sendLink(borrador, req, res);
       }
     } catch (err) {
       res.status(500).send({
