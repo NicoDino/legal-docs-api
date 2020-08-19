@@ -86,18 +86,10 @@ export default class BorradorController {
   public reenviar = async (req: Request, res: Response): Promise<any> => {
     try {
       let idBorrador = req.body.borrador._id;
-      if (environment.toString() === 'LOCAL') {
-        /** para testear localmente */
-        await this.crearCopia(idBorrador);
-        res.status(200).send({
-          success: true,
-        });
-      }
-      if (environment.toString() === 'CLOUD') {
-        /** Para correr en el servidor */
-        const borrador = await Borrador.findById(idBorrador);
-        sendLink(borrador, req, res);
-      }
+      await this.crearCopia(idBorrador);
+      res.status(200).send({
+        success: true,
+      });
     } catch (err) {
       res.status(500).send({
         success: false,
