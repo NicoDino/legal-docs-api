@@ -12,6 +12,9 @@ documento.get('/', verifyToken, controller.findAll);
 documento.get('/public', controller.findAll);
 
 // Retrieve public documentos
+documento.get('/subdocumentos/:padre', controller.findSubdocumentos);
+
+// Retrieve public documentos
 documento.get('/search/:busqueda', controller.search);
 
 // Retrieve a specific documento

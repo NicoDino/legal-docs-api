@@ -43,16 +43,17 @@ const documentoSchema = Schema({
     type: String,
   },
   precio: {
-    type: Number,
-    required: true,
+    type: Number
   },
   hojasDesde: {
-    type: Number,
-    required: true,
+    type: Number
   },
   hojasHasta: {
-    type: Number,
-    required: true,
+    type: Number
+  },
+  padre: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Documento',
   }
 });
 

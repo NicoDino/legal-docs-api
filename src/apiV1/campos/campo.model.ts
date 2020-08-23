@@ -32,10 +32,21 @@ const campoSchema = Schema({
   tipo: {
     type: String,
     required: true,
-    enum: ['boolean', 'opciones', 'input', 'date'],
+    enum: ['boolean', 'opciones', 'input', 'date', 'subdocumento'],
   },
   opciones: {
     type: [String],
+  },
+  opcionesSubdocumento: {
+    type: [{
+      value: {
+        type: String,
+      },
+      subdocumento: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Documento'
+      }
+    }],
   },
   min: {
     type: Number,
