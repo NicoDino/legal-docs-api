@@ -8,7 +8,7 @@ export default class DocumentoController {
   public findAll = async (req: Request, res: Response): Promise<any> => {
     try {
       const documentos = await Documento.find({
-        padre: null
+        padre: null,
       });
       if (!documentos) {
         return res.status(404).send({
@@ -56,10 +56,9 @@ export default class DocumentoController {
   public findSubdocumentos = async (req: Request, res: Response): Promise<any> => {
     try {
       const padre = req.params.padre;
-      const documentos = await Documento.find(
-        {
-          padre: padre
-        });
+      const documentos = await Documento.find({
+        padre: padre,
+      }).populate('campos');
       if (!documentos) {
         return res.status(404).send({
           success: false,
@@ -101,7 +100,20 @@ export default class DocumentoController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { nombre, nombresAlternativos, categoria, html, tipo, referencias, preview, precio, descripcion, hojasDesde, hojasHasta, padre } = req.body;
+    const {
+      nombre,
+      nombresAlternativos,
+      categoria,
+      html,
+      tipo,
+      referencias,
+      preview,
+      precio,
+      descripcion,
+      hojasDesde,
+      hojasHasta,
+      padre,
+    } = req.body;
     try {
       const documento = new Documento({
         nombre,
@@ -115,7 +127,7 @@ export default class DocumentoController {
         hojasDesde,
         hojasHasta,
         descripcion,
-        padre
+        padre,
       });
       const newDocumento = await documento.save();
       res.send(newDocumento);
