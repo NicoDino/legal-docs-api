@@ -30,9 +30,7 @@ export default class UserController {
         });
       }
 
-      const token = await jwt.sign({ email }, JWT_SECRET, {
-        expiresIn: 10000,
-      });
+      const token = await jwt.sign({ email }, JWT_SECRET);
 
       res.json({
         user: { nombre: user.nombre, apellido: user.apellido, email: user.email, id: user._id },
