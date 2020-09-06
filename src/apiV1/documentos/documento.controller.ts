@@ -78,7 +78,12 @@ export default class DocumentoController {
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
-      const documento = await Documento.findOne({ _id: req.params.id }).populate('categoria').populate('campos');
+      const documento = await Documento.findOne({ _id: req.params.id })
+        .populate('categoria')
+        .populate({
+          path: 'campos',
+          populate: { path: 'opcionesSubdocumento.subdocumento', populate: { path: 'campos' } },
+        });
       if (!documento) {
         return res.status(404).send({
           success: false,
