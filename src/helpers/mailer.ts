@@ -1,23 +1,34 @@
-import { EMAIL, MAIL_PASS } from '../config.private';
+import { EMAIL, MAIL_PASS, SMPT_HOST, SMTP_PORT } from '../config.private';
 import path = require('path');
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 
 const nodemailer = require('nodemailer');
 
-export async function sendToken(usuario, newToken) {
-  // create reusable transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    auth: {
-      user: EMAIL, // generated ethereal user
-      pass: MAIL_PASS, // generated ethereal password
-    },
-  });
+// create reusable transporter object using the default SMTP transport
+const transporter = nodemailer.createTransport({
+  // service: 'gmail',
+  host: SMPT_HOST,
+  port: SMTP_PORT,
+  secure: true,
+  requireTLS: true,
+  auth: {
+    user: EMAIL, // generated ethereal user
+    pass: MAIL_PASS, // generated ethereal password
+  },
+});
 
+export function verifyTransporter() {
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Server is ready to take messages');
+    }
+  });
+}
+
+export async function sendToken(usuario, newToken) {
   // setup email data with unicode symbols
   const mailOptions = {
     from: `Legal Aid - <${EMAIL}>`, // sender address
@@ -40,16 +51,7 @@ export async function sendToken(usuario, newToken) {
 
 export async function sendBorrador(emailCliente, borrador, nombreDocumento) {
   // create reusable transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    auth: {
-      user: EMAIL, // generated ethereal user
-      pass: MAIL_PASS, // generated ethereal password
-    },
-  });
+
   const filePath = path.join(__dirname, '../../templates/emails/send_borrador.html');
   const source = fs.readFileSync(filePath, 'utf-8').toString();
   const template = handlebars.compile(source);
