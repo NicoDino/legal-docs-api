@@ -17,6 +17,7 @@
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.4",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",

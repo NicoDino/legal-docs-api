@@ -11,7 +11,8 @@ const borradorSchema = Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Documento',
   },
-  campos: [{ type: String }],
+  subcampos: [Schema.Types.Mixed],
+  campos: [Schema.Types.Mixed],
   pago: {
     type: String,
     required: true,
@@ -20,8 +21,8 @@ const borradorSchema = Schema({
     type: String,
   },
   createdAt: {
-    type: Date
-  }
+    type: Date,
+  },
 });
 
 export default mongoose.model('Borrador', borradorSchema);

@@ -4,6 +4,7 @@ import { launch } from 'puppeteer';
 import { sendBorrador } from '../../helpers/mailer';
 import { sendLink } from '../mercadopago/mercadopago.helper';
 import { ENVIRONMENT } from '../../config.private';
+const cheerio = require('cheerio');
 
 const environment = ENVIRONMENT;
 export default class BorradorController {
@@ -53,12 +54,13 @@ export default class BorradorController {
   };
 
   public create = async (req: Request, res: Response): Promise<any> => {
-    const { emailCliente, documento, campos, createdAt } = req.body.borrador;
+    const { emailCliente, documento, campos, subcampos, createdAt } = req.body.borrador;
     try {
       const borrador = new Borrador({
         emailCliente,
         documento,
         campos,
+        subcampos,
         createdAt,
         pago: 'pendiente',
       });
@@ -85,7 +87,7 @@ export default class BorradorController {
 
   public reenviar = async (req: Request, res: Response): Promise<any> => {
     try {
-      let idBorrador = req.body.borrador._id;
+      const idBorrador = req.body.borrador._id;
       await this.crearCopia(idBorrador);
       res.status(200).send({
         success: true,
@@ -157,11 +159,21 @@ export default class BorradorController {
   public crearCopia = async (idBorrador) => {
     const borrador = await Borrador.findById(idBorrador).populate('documento');
     let rawCopy: string = borrador.documento.html;
+    const $ = cheerio.load(borrador.documento.html);
     const campos = borrador.campos;
-    campos.forEach((campo) => {
-      rawCopy = rawCopy.replace('__________', campo);
-    });
-    rawCopy = rawCopy.split('filter: blur(6px);').join('');
+    const subcampos = borrador.subcampos;
+    for (const campo of campos) {
+      if (campo && campo.isSubdocumento) {
+        $(campo.id).replaceWith(campo.valor);
+      } else {
+        $(campo.id).text(campo.valor);
+      }
+    }
+    for (const subcampo of subcampos) {
+      $(subcampo.id).text(subcampo.valor);
+    }
+    rawCopy = $.html();
+    rawCopy = rawCopy.toString().split('filter: blur(6px);').join('');
     const browser = await launch({ headless: true });
     const page = await browser.newPage();
     await page.setContent(rawCopy);
