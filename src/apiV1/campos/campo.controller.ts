@@ -21,7 +21,7 @@ export default class CampoController {
         data: null,
       });
     }
-  };
+  }
 
   public findOne = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -41,7 +41,7 @@ export default class CampoController {
         data: null,
       });
     }
-  };
+  }
 
   public create = async (req: Request, res: Response): Promise<any> => {
     const { identificador, nombre, descripcion, tipo, ayuda, opciones, opcionesSubdocumento, min, max, documento, posicion } = req.body;
@@ -63,8 +63,13 @@ export default class CampoController {
       const newCampo = await campo.save();
 
       if (newCampo.documento) {
-        let promiseArray = [this.actualizarDocumento(newCampo), this.recalcularPosiciones(newCampo.documento)];
+        const promiseArray = [
+          this.actualizarDocumento(newCampo),
+          this.recalcularPosiciones(newCampo.documento),
+          this.marcarSubdocumentosUtilizados(newCampo)
+        ];
         await Promise.all(promiseArray);
+
       }
       res.json(newCampo);
     } catch (err) {
@@ -74,7 +79,7 @@ export default class CampoController {
         data: null,
       });
     }
-  };
+  }
 
   private async actualizarDocumento(newCampo: any) {
     const documento = await Documento.findById(newCampo.documento);
@@ -90,8 +95,8 @@ export default class CampoController {
   private async recalcularPosiciones(idDocumento) {
     const documento = await Documento.findById(idDocumento).populate('campos').lean();
     let nuevaPosicion = 0;
-    let updatePromises = [];
-    for (let campo of documento.campos) {
+    const updatePromises = [];
+    for (const campo of documento.campos) {
       nuevaPosicion = documento.html.indexOf(campo.identificador);
       updatePromises.push(
         Campo.findByIdAndUpdate(campo._id, {
@@ -100,6 +105,29 @@ export default class CampoController {
       );
     }
     await Promise.all(updatePromises);
+  }
+
+  private async marcarSubdocumentosUtilizados(campo) {
+
+    const allSubdocumentos = await Documento.find({
+      padre: campo.documento,
+    }).lean();
+    const subdocumentosUtilizados = campo.opcionesSubdocumento.toObject();
+    const promises = [];
+    let indice = -1;
+    for (const docu of allSubdocumentos) {
+      indice = subdocumentosUtilizados.findIndex(subdocu => {
+        return subdocu.subdocumento.toString() === docu._id.toString();
+      });
+      if (indice > -1) {
+        promises.push(
+          Documento.findByIdAndUpdate(docu._id, {
+            $set: { campoAsociado: campo._id },
+          })
+        );
+      }
+    }
+    await Promise.all(promises);
   }
 
   public update = async (req: Request, res: Response): Promise<any> => {
@@ -118,6 +146,8 @@ export default class CampoController {
           message: 'Campo not found',
           data: null,
         });
+      } else {
+        await this.marcarSubdocumentosUtilizados(campoUpdated);
       }
       res.status(200).send({
         success: true,
@@ -130,7 +160,7 @@ export default class CampoController {
         data: null,
       });
     }
-  };
+  }
 
   public remove = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -146,6 +176,17 @@ export default class CampoController {
 
       const documento = campo.documento;
       documento.campos.pull(campo._id);
+      // Libera los subdocumentos asociados
+      const promises = [];
+      for (const opcion of campo.opcionesSubdocumento) {
+        promises.push(
+          Documento.findByIdAndUpdate(opcion.subdocumento, {
+            $set: { campoAsociado: null },
+          })
+        );
+      }
+      await Promise.all(promises);
+      // ---
       await documento.save();
       await campo.remove();
       res.status(204).send();
@@ -156,5 +197,5 @@ export default class CampoController {
         data: null,
       });
     }
-  };
+  }
 }

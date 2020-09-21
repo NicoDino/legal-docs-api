@@ -51,10 +51,17 @@ const documentoSchema = Schema({
   hojasHasta: {
     type: Number
   },
+  // Si es un subdocumento, tiene un documento padre
   padre: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Documento',
-  }
+  },
+  // Campo asociado al subdocumento
+  campoAsociado :{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Campo',
+  },
+
 });
 
 export default mongoose.model('Documento', documentoSchema);
