@@ -162,7 +162,11 @@ export default class DocumentoController {
           data: null,
         });
       }
-      const documento = await Documento.findOne({ _id: documentoUpdated.id }).populate('categoria').populate('campos');
+      const documento = await Documento.findOne({ _id: documentoUpdated.id })
+      .populate({
+        path: 'campos',
+        populate: { path: 'opcionesSubdocumento.subdocumento', populate: { path: 'campos' } },
+      });
       documento.campos.sort((a, b) => {
         a.posicion < b.posicion ? -1 : 1;
       });
